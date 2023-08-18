@@ -1,5 +1,5 @@
-import Image, { ImageProps } from 'next/image';
-import { ReactElement } from 'react';
+import Image, { type ImageProps } from 'next/image';
+import type { ReactElement } from 'react';
 
 export default function ZPattern({
 	children,
