@@ -1,4 +1,22 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'cdn.discordapp.com',
+			},
+		],
+	},
+	async redirects() {
+		return [
+			{
+				'source': '/dashboard',
+				'destination': '/dashboard/settings',
+				'permanent': false,
+			},
+		];
+	},
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,4 +1,4 @@
-import { Path } from '@util/Types';
+import { type Path } from '@/util/types/paths';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';

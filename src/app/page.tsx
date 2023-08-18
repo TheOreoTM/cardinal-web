@@ -1,8 +1,5 @@
 import InviteToServer from '@/components/InviteToServer';
-import Nav from '@/components/Nav';
-import Navbar from '@/components/Navbar';
 import ZPattern from '@/components/ZPattern';
-import Footer from '@/components/Footer';
 
 const Home = () => {
 	return (

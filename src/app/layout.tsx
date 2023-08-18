@@ -1,8 +1,9 @@
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
+import Header from '@/components/Header';
+import Navbar from '@/components/Navbar';
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
@@ -10,11 +11,10 @@ export const metadata: Metadata = {
 			? `https://${process.env.VERCEL_URL}`
 			: `http://localhost:${process.env.PORT || 3000}`
 	),
-	title: 'Reindeer - User reports Discord bot',
-	description:
-		'Reindeer is a Discord bot that helps server admins manage message and user reports better.',
+	themeColor: '#0c0c0c',
+	title: 'Cardinal - Discord bot',
+	description: 'The discord bot with all your favourite features',
 	icons: ['/bot-icon.png'],
-	themeColor: '#fe2828',
 	openGraph: {
 		type: 'website',
 		images: ['/bot-icon.png'],
@@ -35,8 +35,8 @@ export default function RootLayout({
 			</head>
 			<body className={` bg-background text-text`}>
 				<NextTopLoader color='#99af64' showSpinner={false} />
-				<Navbar />
-				{children}
+				<Header />
+				<div className='py-2 px-8 h-fit md:py-18'>{children}</div>
 				<Footer />
 			</body>
 		</html>

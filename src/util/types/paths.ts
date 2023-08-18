@@ -1,9 +1,12 @@
+import { type ReactElement } from 'react';
+
 export type Path = {
 	name: string;
 	path: string;
 	jsx?: JSX.Element;
-	icon?: string;
+	icon?: string | ReactElement;
 	newTab?: boolean;
+	label?: string;
 };
 
 export type FooterCategory = {

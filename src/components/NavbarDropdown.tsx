@@ -1,12 +1,12 @@
 'use client';
 
 import { Menu, Transition } from '@headlessui/react';
-import { Path } from '@util/Types';
 import Link from 'next/link';
 import { Fragment } from 'react';
 import { HiBars3 } from 'react-icons/hi2';
+import type { NavItem } from '@/util/types/nav';
 
-export default function NavbarDropdown({ paths }: { paths: Path[] }) {
+export default function NavbarDropdown({ items }: { items: NavItem[] }) {
 	return (
 		<Menu as='nav' className='relative inline-block text-left'>
 			<div>
@@ -25,20 +25,19 @@ export default function NavbarDropdown({ paths }: { paths: Path[] }) {
 			>
 				<Menu.Items className='bg- absolute left-0 mt-2 w-56 origin-top-left divide-y divide-slate-700 rounded-md bg-secondary border border-slate-800 shadow-lg ring-opacity-5 focus:outline-none'>
 					<div className='px-1 py-1 '>
-						{paths.map(({ path, name, jsx }) => {
-							if (path) {
-								return (
-									<Menu.Item key={path}>
-										<Link
-											href={path}
-											className='group flex w-full items-center rounded-md px-2 py-2 text-sm text-text hover:bg-secondary-dark'
-										>
-											{name}
-										</Link>
-									</Menu.Item>
-								);
-							}
-							return jsx;
+						{items.map(({ href, label }) => {
+							href === undefined ? (href = '#') : (href = href);
+
+							return (
+								<Menu.Item key={href}>
+									<Link
+										href={href}
+										className='group flex w-full items-center rounded-md px-2 py-2 text-sm text-text hover:bg-secondary-dark'
+									>
+										{label}
+									</Link>
+								</Menu.Item>
+							);
 						})}
 					</div>
 				</Menu.Items>
