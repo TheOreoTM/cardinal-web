@@ -3,12 +3,12 @@ import * as React from 'react';
 import Link from 'next/link';
 import { type NavItem } from '@/util/types/nav';
 import { SiteConfig } from '@/config/siteConfig';
-import { isActiveRoute, cn } from '@util/utils';
+// import { isActiveRoute, cn } from '@util/utils';
 import { Icons } from '@/components/Icons';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 
 export function MainNav({ items }: { items?: NavItem[] }) {
-	const currentPathName = usePathname();
+	// const currentPathName = usePathname();
 
 	return (
 		<div className='flex items-center h-full gap-6 lg:gap-10'>
