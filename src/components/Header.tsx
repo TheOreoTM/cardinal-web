@@ -7,7 +7,7 @@ import { getCurrentUser } from '@/util/session';
 export async function Header() {
 	const user = await getCurrentUser();
 	return (
-		<header className='sticky top-0 z-40 flex w-full shadow-accent bg-opacity-50 bg-background/10 backdrop-blur-md'>
+		<header className='sticky top-0 z-40 flex w-full shadow-secondary bg-opacity-50 bg-transparent backdrop-blur-md'>
 			<div className='flex items-center justify-between w-full px-4 space-x-4 h-14 sm:space-x-0'>
 				<div className='flex-1 h-full'>
 					<MainNav items={SiteConfig.getHeaderLinks(!!user)} />

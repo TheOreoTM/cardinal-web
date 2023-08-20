@@ -1,8 +1,8 @@
 import Footer from '@/components/Footer';
 import { type Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
-import './globals.css';
 import Header from '@/components/Header';
+import './globals.css';
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
@@ -32,7 +32,7 @@ export default function RootLayout({
 				<meta itemProp='image' content='/bot-icon.png' />
 				<meta itemProp='imageUrl' content='/bot-icon.png' />
 			</head>
-			<body className={` bg-background text-text`}>
+			<body className={`bg-background text-text`}>
 				<NextTopLoader color='#99af64' showSpinner={false} />
 				<Header />
 				<div className='py-2 px-8 h-fit md:py-18'>{children}</div>

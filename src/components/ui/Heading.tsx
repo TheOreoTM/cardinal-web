@@ -20,7 +20,7 @@ export const Heading: React.FC<HeadingProps> = ({
 	return (
 		<div className={cn({ 'text-center': centered })}>
 			{title && (
-				<h2 className='text-2xl md:text-4xl font-special font-bold tracking-tight text-primary'>
+				<h2 className='text-2xl md:text-4xl font-special font-bold tracking-tight text-muted-background'>
 					{title}
 				</h2>
 			)}

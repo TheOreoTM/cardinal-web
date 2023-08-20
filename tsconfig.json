@@ -30,7 +30,8 @@
 			"@/*": ["./src/*"],
 			"@components/*": ["./src/components/*"],
 			"@util/*": ["./src/util/*"],
-			"@public": ["./public/*"]
+			"@public": ["./public/*"],
+			"@style": ["./src/styles/globals.css"]
 		}
 	},
 	"include": [

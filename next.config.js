@@ -11,9 +11,14 @@ const nextConfig = {
 	async redirects() {
 		return [
 			{
-				'source': '/dashboard',
-				'destination': '/dashboard/settings',
-				'permanent': false,
+				source: '/dashboard',
+				destination: '/dashboard/settings',
+				permanent: false,
+			},
+			{
+				source: '/support',
+				destination: 'https://discord.gg/54ZR2b8AYV',
+				permanent: false,
 			},
 		];
 	},
