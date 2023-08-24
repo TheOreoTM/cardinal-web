@@ -3,6 +3,7 @@ import { type Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 import Header from '@/components/Header';
 import './globals.css';
+import { Providers } from '@/components/Providers';
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
@@ -34,9 +35,11 @@ export default function RootLayout({
 			</head>
 			<body className={`bg-background text-text`}>
 				<NextTopLoader color='#99af64' showSpinner={false} />
-				<Header />
-				<div className='py-2 px-8 h-fit md:py-18'>{children}</div>
-				<Footer />
+				<Providers>
+					<Header />
+					<div className='py-2 px-8 h-fit md:py-18'>{children}</div>
+					<Footer />
+				</Providers>
 			</body>
 		</html>
 	);

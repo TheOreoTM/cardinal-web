@@ -3,16 +3,25 @@ const nextConfig = {
 	images: {
 		remotePatterns: [
 			{
+				hostname: 'cdn.discord.com',
 				protocol: 'https',
+			},
+			{
 				hostname: 'cdn.discordapp.com',
+				protocol: 'https',
 			},
 		],
 	},
+
+	experimental: {
+		serverActions: true,
+	},
+
 	async redirects() {
 		return [
 			{
 				source: '/dashboard',
-				destination: '/dashboard/settings',
+				destination: '/dashboard/select',
 				permanent: false,
 			},
 			{

@@ -10,6 +10,7 @@ declare module 'next-auth' {
 			id: string;
 			role: UserRole;
 			avatar: string;
+			accessToken: string;
 		} & DefaultSession['user'];
 	}
 }
@@ -30,42 +31,15 @@ export const nextAuthOptions = {
 			},
 		}),
 	],
-
 	callbacks: {
-		async jwt({ token, user }) {
-			const dbUser = await prisma.user.findFirst({
-				where: {
-					email: token.email,
-				},
-			});
-
-			if (!dbUser) {
-				if (user) {
-					token.id = user.id;
-				}
-
-				return token;
+		async jwt({ token, account }) {
+			if (account) {
+				token.accessToken = account.access_token;
 			}
-
-			// console.log(user, token);
-
-			return {
-				id: dbUser.id,
-				name: dbUser.name,
-				email: dbUser.email,
-				role: dbUser.role,
-				picture: dbUser.image,
-			};
+			return token;
 		},
-
-		async session({ token, session }) {
-			if (token) {
-				session.user.id = token.id as string;
-				session.user.name = token.name;
-				session.user.email = token.email;
-				session.user.role = token.role as UserRole;
-				session.user.image = token.picture;
-			}
+		async session({ session, token }) {
+			session.user.accessToken = token.accessToken as string;
 
 			return session;
 		},
