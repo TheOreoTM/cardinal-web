@@ -32,18 +32,3 @@ export default async function GuildSettingsPage({
 		</Shell>
 	);
 }
-
-export async function getServerSideProps({
-	params,
-}: {
-	params: { guildId: string };
-}) {
-	const { guildId } = params;
-	const guildInfo = await getGuild(guildId);
-
-	return {
-		props: {
-			guildInfo,
-		},
-	};
-}
