@@ -18,7 +18,6 @@ export default async function Suggestion({
 	console.log("Test");
 	const guild = await getCurrentGuild(params.guildId);
 	if (!guild) return redirect("/dashboard");
-	console.log(guild);
 
 	const fetchChannels = async () => {
 		const result = await axios({
