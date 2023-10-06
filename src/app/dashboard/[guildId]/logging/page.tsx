@@ -31,7 +31,7 @@ export default async function Logging({
 }) {
 	const guild = await getCurrentGuild(params.guildId);
 	const channels = await getChannels(guild.id);
-	console.log(channels);
+	console.log(channels.map((channel) => channel.name));
 
 	return (
 		<Shell layout="dashboard">
