@@ -17,6 +17,7 @@ export default async function Logging({
 }) {
 	const guild = await getCurrentGuild(params.guildId);
 	if (!guild) return redirect("/dashboard");
+	console.log(guild);
 
 	const fetchChannels = async () => {
 		const result = await axios({
