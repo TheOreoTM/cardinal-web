@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 async function getCurrentGuild(guildId: string) {
 	const guild = await getGuild(guildId);
+	if (!guild) return redirect("/dashboard");
 	return guild;
 }
 
@@ -15,7 +16,6 @@ export default async function Logging({
 	params: { guildId: string };
 }) {
 	const guild = await getCurrentGuild(params.guildId);
-	if (!guild) return redirect("/dashboard");
 
 	return (
 		<Shell layout="dashboard">
