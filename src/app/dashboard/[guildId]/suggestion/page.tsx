@@ -1,9 +1,9 @@
 import Shell from "@/components/Shell";
 import { Heading } from "@/components/ui/Heading";
-import { Textarea } from "@/components/ui/TextArea";
 import { getGuild } from "../../loaders";
 import { redirect } from "next/navigation";
 import { Subheading } from "@/components/ui/SubHeading";
+import axios from "axios";
 
 async function getCurrentGuild(guildId: string) {
 	const guild = await getGuild(guildId);
@@ -18,6 +18,19 @@ export default async function Logging({
 	const guild = await getCurrentGuild(params.guildId);
 	if (!guild) return redirect("/dashboard");
 
+	const fetchChannels = async () => {
+		const result = await axios({
+			url: `/api/discord/getChannels?guildId=${guild.id}`,
+			method: "GET",
+		}).catch((err) => {
+			console.log(err);
+		});
+
+		console.log(result);
+	};
+
+	await fetchChannels();
+
 	return (
 		<Shell layout="dashboard">
 			<Heading
@@ -29,11 +42,7 @@ export default async function Logging({
 				description="The channel you want the suggestions to be sent to"
 				title="Suggestion Channel"
 			/>
-			<Textarea
-				rows={1}
-				className="w-full p-2 border resize-none"
-				placeholder="Type your stuff here"
-			/>
+			<select></select>
 		</Shell>
 	);
 }

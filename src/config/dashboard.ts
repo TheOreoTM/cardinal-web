@@ -1,4 +1,4 @@
-import type { NavItem } from '@util/types/nav';
+import type { NavItem } from "@util/types/nav";
 
 export class DashboardConfig {
 	public constructor(readonly guildId: string) {
@@ -8,14 +8,18 @@ export class DashboardConfig {
 	public sidebarNav() {
 		const sidebarNav = [
 			{
-				title: 'Settings',
+				title: "Settings",
 				href: `/dashboard/${this.guildId}/settings`,
-				icon: 'settings',
+				icon: "settings",
 			},
 			{
-				title: 'Logging',
+				title: "Logging",
 				href: `/dashboard/${this.guildId}/logging`,
-				icon: 'logging',
+				icon: "logging",
+			},
+			{
+				title: "Suggestion",
+				href: `/dashboard/${this.guildId}/suggestion`,
 			},
 		] as NavItem[];
 
