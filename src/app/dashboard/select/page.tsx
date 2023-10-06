@@ -1,11 +1,12 @@
-import Shell from '@/components/Shell';
-import { getMutualGuilds } from '../loaders';
-import { GuildsList } from '@/components/GuildsList';
+import Shell from "@/components/Shell";
+import { getMutualGuilds, getStatus } from "../loaders";
+import { GuildsList } from "@/components/GuildsList";
 
 export default async function SelectGuildsPage({}) {
 	const guilds = await getMutualGuilds();
+	await getStatus();
 	return (
-		<Shell layout='dashboard'>
+		<Shell layout="dashboard">
 			<GuildsList guilds={guilds} />
 		</Shell>
 	);

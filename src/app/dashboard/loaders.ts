@@ -1,7 +1,15 @@
-import { DISCORD_API_URL, DISCORD_TOKEN } from '@/util/constants';
-import { UnauthorizedError } from '@/util/exceptions';
-import { getCurrentUser } from '@/util/session';
-import type { PartialGuild } from '@/util/types/discord';
+import { API_URL, DISCORD_API_URL, DISCORD_TOKEN } from "@/util/constants";
+import { UnauthorizedError } from "@/util/exceptions";
+import { getCurrentUser } from "@/util/session";
+import type { PartialGuild } from "@/util/types/discord";
+
+export async function getStatus() {
+	await fetch(`${API_URL}/status`, {
+		headers: {
+			"Authorization": `Bot ${DISCORD_TOKEN}`,
+		},
+	});
+}
 
 async function getUserGuilds(userAccessToken: string) {
 	const user = await getCurrentUser();
@@ -11,9 +19,9 @@ async function getUserGuilds(userAccessToken: string) {
 	}
 
 	const res = await fetch(`${DISCORD_API_URL}/users/@me/guilds`, {
-		method: 'GET',
+		method: "GET",
 		headers: {
-			'Authorization': `Bearer ${userAccessToken}`,
+			"Authorization": `Bearer ${userAccessToken}`,
 		},
 	});
 	const data: PartialGuild[] = await res.json();
@@ -22,9 +30,9 @@ async function getUserGuilds(userAccessToken: string) {
 
 async function getBotGuilds() {
 	const res = await fetch(`${DISCORD_API_URL}/users/@me/guilds`, {
-		method: 'GET',
+		method: "GET",
 		headers: {
-			'Authorization': `Bot ${DISCORD_TOKEN}`,
+			"Authorization": `Bot ${DISCORD_TOKEN}`,
 		},
 	});
 
@@ -51,9 +59,9 @@ export async function getMutualGuilds() {
 
 export async function getGuild(id: string) {
 	const res = await fetch(`${DISCORD_API_URL}/guilds/${id}`, {
-		method: 'GET',
+		method: "GET",
 		headers: {
-			'Authorization': `Bot ${DISCORD_TOKEN}`,
+			"Authorization": `Bot ${DISCORD_TOKEN}`,
 		},
 	});
 
