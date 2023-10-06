@@ -68,6 +68,7 @@ export async function getGuild(id: string) {
 		},
 	});
 
-	const data: PartialGuild = await res.json();
-	return data;
+	const data = await res.json();
+	if (data.code === 10004) return null;
+	return data as PartialGuild;
 }
