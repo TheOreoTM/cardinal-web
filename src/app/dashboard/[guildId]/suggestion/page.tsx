@@ -10,7 +10,7 @@ async function getCurrentGuild(guildId: string) {
 	return guild;
 }
 
-export default async function Logging({
+export default async function Suggestion({
 	params,
 }: {
 	params: { guildId: string };
