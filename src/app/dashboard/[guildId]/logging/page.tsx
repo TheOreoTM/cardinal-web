@@ -14,7 +14,6 @@ export default async function Logging({
 }: {
 	params: { guildId: string };
 }) {
-	console.log("HIIIIIIii");
 	const guild = await getCurrentGuild(params.guildId);
 	if (!guild) return redirect("/dashboard");
 
@@ -25,6 +24,7 @@ export default async function Logging({
 				description="Change the logging settings of the server"
 				title={`Logging settings for ${guild.name}`}
 			/>
+			{JSON.stringify(guild)}
 			<Textarea
 				rows={1}
 				className="w-full p-2 border resize-none"
