@@ -12,7 +12,7 @@ async function getCurrentGuild(guildId: string) {
 	return guild;
 }
 
-async function getChannels(guildId: string) {
+export async function getChannels(guildId: string) {
 	const result = await axios<APIChannel[]>({
 		url: `/api/discord/getChannels?guildId=${guildId}`,
 		method: "GET",
@@ -30,7 +30,7 @@ export default async function Logging({
 	params: { guildId: string };
 }) {
 	const guild = await getCurrentGuild(params.guildId);
-	await getChannels(guild.id);
+	// await getChannels(guild.id);
 
 	return (
 		<Shell layout="dashboard">

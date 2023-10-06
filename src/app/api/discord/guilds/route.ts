@@ -19,6 +19,5 @@ export async function GET(request: NextRequest) {
 	}
 
 	const channels = res.data.filter((channel: APIChannel) => channel.type === 0);
-	console.log(channels);
 	return NextResponse.json({ channels });
 }
