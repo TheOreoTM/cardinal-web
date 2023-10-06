@@ -10,6 +10,18 @@ async function getCurrentGuild(guildId: string) {
 	return guild;
 }
 
+const fetchChannels = async (guildId: string) => {
+	const result = await axios({
+		url: `/api/discord/getChannels?guildId=${guildId}`,
+		method: "GET",
+	}).catch((err) => {
+		console.log(err);
+	});
+
+	console.log(result);
+	return result;
+};
+
 export default async function Suggestion({
 	params,
 }: {
@@ -19,18 +31,8 @@ export default async function Suggestion({
 	const guild = await getCurrentGuild(params.guildId);
 	if (!guild) return redirect("/dashboard");
 
-	const fetchChannels = async () => {
-		const result = await axios({
-			url: `/api/discord/getChannels?guildId=${guild.id}`,
-			method: "GET",
-		}).catch((err) => {
-			console.log(err);
-		});
-
-		console.log(result);
-	};
-
-	await fetchChannels();
+	const channels = await fetchChannels(guild.id);
+	console.log(channels);
 
 	return (
 		<Shell layout="dashboard">
@@ -43,7 +45,7 @@ export default async function Suggestion({
 				description="The channel you want the suggestions to be sent to"
 				title="Suggestion Channel"
 			/>
-			<select> </select>
+			{JSON.stringify(channels)}
 		</Shell>
 	);
 }
