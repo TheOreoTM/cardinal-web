@@ -4,11 +4,14 @@ import { getCurrentUser } from "@/util/session";
 import type { PartialGuild } from "@/util/types/discord";
 
 export async function getStatus() {
-	await fetch(`${API_URL}/status`, {
+	const res = await fetch(`${API_URL}/status`, {
 		headers: {
 			"Authorization": `Bot ${DISCORD_TOKEN}`,
 		},
 	});
+
+	const data = await res.json();
+	console.log(data);
 }
 
 async function getUserGuilds(userAccessToken: string) {
