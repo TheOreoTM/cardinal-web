@@ -15,6 +15,7 @@ export default async function Suggestion({
 }: {
 	params: { guildId: string };
 }) {
+	console.log("Test");
 	const guild = await getCurrentGuild(params.guildId);
 	if (!guild) return redirect("/dashboard");
 	console.log(guild);
@@ -43,7 +44,7 @@ export default async function Suggestion({
 				description="The channel you want the suggestions to be sent to"
 				title="Suggestion Channel"
 			/>
-			<select></select>
+			<select> </select>
 		</Shell>
 	);
 }
