@@ -3,6 +3,8 @@ import { Heading } from "@/components/ui/Heading";
 import { Textarea } from "@/components/ui/TextArea";
 import { getChannels, getGuild } from "../../loaders";
 import { redirect } from "next/navigation";
+import { apiFetch } from "@/util/utils";
+import type { APIChannel } from "discord-api-types/v9";
 
 async function getCurrentGuild(guildId: string) {
 	const guild = await getGuild(guildId);
@@ -28,8 +30,8 @@ export default async function Logging({
 	params: { guildId: string };
 }) {
 	const guild = await getCurrentGuild(params.guildId);
-	const channels = await getChannels(guild.id);
-	// const data = await apiFetch<any>(`/guilds/${guild.id}/settings`);
+	const channels: APIChannel[] = await getChannels(guild.id);
+	const data = await apiFetch<any>(`/guilds/${guild.id}/settings`);
 	// console.log(data);
 
 	return (
@@ -39,13 +41,13 @@ export default async function Logging({
 				description="Change the logging settings of the server"
 				title={`Logging settings for ${guild.name}`}
 			/>
-			{JSON.stringify(channels)}
+			{JSON.stringify(channels.map((channel) => channel.name))}
 			<Textarea
 				rows={1}
 				className="w-full p-2 border resize-none"
 				placeholder="Type your stuff here"
 			/>
-			{/* {JSON.stringify(data)} */}
+			{JSON.stringify(data)}
 		</Shell>
 	);
 }
