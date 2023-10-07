@@ -3,8 +3,6 @@ import { Heading } from "@/components/ui/Heading";
 import { Textarea } from "@/components/ui/TextArea";
 import { getGuild } from "../../loaders";
 import { redirect } from "next/navigation";
-import axios from "axios";
-import type { APIChannel } from "discord-api-types/v9";
 
 async function getCurrentGuild(guildId: string) {
 	const guild = await getGuild(guildId);
@@ -12,17 +10,17 @@ async function getCurrentGuild(guildId: string) {
 	return guild;
 }
 
-export async function getChannels(guildId: string) {
-	const result = await axios<APIChannel[]>({
-		url: `/api/discord/getChannels?guildId=${guildId}`,
-		method: "GET",
-	}).catch((e) => console.error(e));
+// async function getChannels(guildId: string) {
+// 	const result = await axios<APIChannel[]>({
+// 		url: `/api/discord/getChannels?guildId=${guildId}`,
+// 		method: "GET",
+// 	}).catch((e) => console.error(e));
 
-	const channels = result!.data.filter(
-		(channel: APIChannel) => channel.type === 0
-	);
-	return channels;
-}
+// 	const channels = result!.data.filter(
+// 		(channel: APIChannel) => channel.type === 0
+// 	);
+// 	return channels;
+// }
 
 export default async function Logging({
 	params,
