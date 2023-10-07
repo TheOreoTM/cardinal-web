@@ -31,6 +31,7 @@ export default async function Logging({
 	const guild = await getCurrentGuild(params.guildId);
 	const channels = await getChannels(guild.id);
 	const data = await apiFetch<any>(`/guilds/${guild.id}/settings`);
+	console.log(data);
 
 	return (
 		<Shell layout="dashboard">
@@ -45,7 +46,7 @@ export default async function Logging({
 				className="w-full p-2 border resize-none"
 				placeholder="Type your stuff here"
 			/>
-			{JSON.stringify(data)}
+			{/* {JSON.stringify(data)} */}
 		</Shell>
 	);
 }
