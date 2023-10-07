@@ -30,8 +30,7 @@ export default async function Logging({
 }) {
 	const guild = await getCurrentGuild(params.guildId);
 	const channels = await getChannels(guild.id);
-	console.log(channels);
-	console.log(apiFetch<{ message: string }>(`/status`));
+	const data = apiFetch<{ message: string }>(`/status`);
 
 	return (
 		<Shell layout="dashboard">
@@ -40,6 +39,8 @@ export default async function Logging({
 				description="Change the logging settings of the server"
 				title={`Logging settings for ${guild.name}`}
 			/>
+			{JSON.stringify(channels)}
+			{JSON.stringify(data)}
 			<Textarea
 				rows={1}
 				className="w-full p-2 border resize-none"
