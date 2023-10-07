@@ -40,12 +40,12 @@ export default async function Logging({
 				title={`Logging settings for ${guild.name}`}
 			/>
 			{JSON.stringify(channels)}
-			{JSON.stringify(data)}
 			<Textarea
 				rows={1}
 				className="w-full p-2 border resize-none"
 				placeholder="Type your stuff here"
 			/>
+			{JSON.stringify(data)}
 		</Shell>
 	);
 }
