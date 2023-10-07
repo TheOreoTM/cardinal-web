@@ -12,18 +12,18 @@ export const isActiveRoute = (
 ) => currentRouteHref.startsWith(providedRouteHref);
 
 export async function apiFetch<T>(path: string, options: RequestInit = {}) {
-	console.log(`${API_URL}${path}`);
 	const response = await fetch(`${API_URL}${path}`, {
 		...options,
 		credentials: "include",
 		headers: {
 			...options.headers,
 			"Content-Type": "application/json",
-			"Authorization": `Bearer ${DISCORD_TOKEN}`,
+			"Authorization": `Bot ${DISCORD_TOKEN}`,
 		},
 	});
 
 	const jsonResponse = await response.json();
+	console.log(jsonResponse);
 
 	if (jsonResponse.error) {
 		throw response;
