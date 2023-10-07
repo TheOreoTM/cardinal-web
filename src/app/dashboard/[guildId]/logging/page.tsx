@@ -29,7 +29,8 @@ export default async function Logging({
 	params: { guildId: string };
 }) {
 	const guild = await getCurrentGuild(params.guildId);
-	await getChannels(guild.id);
+	const channels = await getChannels(guild.id);
+	console.log(channels);
 	console.log(apiFetch<{ message: string }>(`/status`));
 
 	return (
