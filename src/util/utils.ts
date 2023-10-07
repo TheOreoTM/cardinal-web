@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { API_URL } from "./constants";
+import { API_URL, DISCORD_TOKEN } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -19,6 +19,7 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}) {
 		headers: {
 			...options.headers,
 			"Content-Type": "application/json",
+			"Authorization": `Bearer ${DISCORD_TOKEN}`,
 		},
 	});
 
