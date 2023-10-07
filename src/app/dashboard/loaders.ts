@@ -76,13 +76,19 @@ export async function getGuild(id: string) {
 }
 
 export async function getChannels(guildId: string) {
-	const result = await axios<APIChannel[]>({
-		url: `/api/discord/getChannels?guildId=${guildId}`,
+	const res = await axios({
+		url: `${DISCORD_API_URL}/guilds/${guildId}/channels`,
 		method: "GET",
+		headers: {
+			Authorization: `Bot ${DISCORD_TOKEN}`,
+		},
 	}).catch((e) => console.error(e));
 
-	const channels = result!.data.filter(
-		(channel: APIChannel) => channel.type === 0
-	);
+	if (!res) {
+		return;
+	}
+
+	const channels = res.data.filter((channel: APIChannel) => channel.type === 0);
+
 	return channels;
 }
