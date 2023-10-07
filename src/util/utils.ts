@@ -12,6 +12,7 @@ export const isActiveRoute = (
 ) => currentRouteHref.startsWith(providedRouteHref);
 
 export async function apiFetch<T>(path: string, options: RequestInit = {}) {
+	console.log(`${API_URL}${path}`);
 	const response = await fetch(`${API_URL}${path}`, {
 		...options,
 		credentials: "include",
