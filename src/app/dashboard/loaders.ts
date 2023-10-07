@@ -2,6 +2,8 @@ import { API_URL, DISCORD_API_URL, DISCORD_TOKEN } from "@/util/constants";
 import { UnauthorizedError } from "@/util/exceptions";
 import { getCurrentUser } from "@/util/session";
 import type { PartialGuild } from "@/util/types/discord";
+import axios from "axios";
+import type { APIChannel } from "discord-api-types/v9";
 
 export async function getStatus() {
 	const res = await fetch(`${API_URL}/status`, {
@@ -71,4 +73,16 @@ export async function getGuild(id: string) {
 	const data = await res.json();
 	if (data.code === 10004) return null;
 	return data as PartialGuild;
+}
+
+export async function getChannels(guildId: string) {
+	const result = await axios<APIChannel[]>({
+		url: `/api/discord/getChannels?guildId=${guildId}`,
+		method: "GET",
+	}).catch((e) => console.error(e));
+
+	const channels = result!.data.filter(
+		(channel: APIChannel) => channel.type === 0
+	);
+	return channels;
 }

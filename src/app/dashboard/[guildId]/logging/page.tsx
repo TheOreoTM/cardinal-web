@@ -1,7 +1,7 @@
 import Shell from "@/components/Shell";
 import { Heading } from "@/components/ui/Heading";
 import { Textarea } from "@/components/ui/TextArea";
-import { getGuild } from "../../loaders";
+import { getChannels, getGuild } from "../../loaders";
 import { redirect } from "next/navigation";
 
 async function getCurrentGuild(guildId: string) {
@@ -28,7 +28,7 @@ export default async function Logging({
 	params: { guildId: string };
 }) {
 	const guild = await getCurrentGuild(params.guildId);
-	// await getChannels(guild.id);
+	await getChannels(guild.id);
 
 	return (
 		<Shell layout="dashboard">
