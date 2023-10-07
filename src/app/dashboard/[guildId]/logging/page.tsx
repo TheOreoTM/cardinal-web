@@ -3,6 +3,7 @@ import { Heading } from "@/components/ui/Heading";
 import { Textarea } from "@/components/ui/TextArea";
 import { getChannels, getGuild } from "../../loaders";
 import { redirect } from "next/navigation";
+import { apiFetch } from "@/util/utils";
 
 async function getCurrentGuild(guildId: string) {
 	const guild = await getGuild(guildId);
@@ -29,6 +30,7 @@ export default async function Logging({
 }) {
 	const guild = await getCurrentGuild(params.guildId);
 	await getChannels(guild.id);
+	console.log(apiFetch<{ message: string }>(`/status`));
 
 	return (
 		<Shell layout="dashboard">
