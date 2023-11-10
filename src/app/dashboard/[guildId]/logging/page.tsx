@@ -3,7 +3,6 @@ import { Heading } from "@/components/ui/Heading";
 import { Textarea } from "@/components/ui/TextArea";
 import { getChannels, getGuild } from "../../loaders";
 import { redirect } from "next/navigation";
-import { apiFetch } from "@/util/utils";
 import type { APIChannel } from "discord-api-types/v9";
 import { SelectOne } from "@/components/ui/SelectOne";
 
@@ -32,7 +31,6 @@ export default async function Logging({
 }) {
 	const guild = await getCurrentGuild(params.guildId);
 	const channels: APIChannel[] = await getChannels(guild.id);
-	await apiFetch<any>(`/guilds/${guild.id}/settings`);
 	const channelsList: { label: string; value: string }[] = [];
 	channels.forEach((c) => {
 		channelsList.push({ label: c.name!, value: c.id });
