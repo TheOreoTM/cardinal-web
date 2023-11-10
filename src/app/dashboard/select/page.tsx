@@ -1,5 +1,5 @@
 import Shell from "@/components/Shell";
-import { getMutualGuilds, getStatus } from "../loaders";
+import { getMutualGuilds } from "../loaders";
 import { GuildsList } from "@/components/GuildsList";
 
 export default async function SelectGuildsPage({}) {
