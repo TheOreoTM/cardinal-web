@@ -5,6 +5,7 @@ import { getChannels, getGuild } from "../../loaders";
 import { redirect } from "next/navigation";
 import { apiFetch } from "@/util/utils";
 import type { APIChannel } from "discord-api-types/v9";
+import { SelectOne } from "@/components/ui/SelectOne";
 
 async function getCurrentGuild(guildId: string) {
 	const guild = await getGuild(guildId);
@@ -31,8 +32,11 @@ export default async function Logging({
 }) {
 	const guild = await getCurrentGuild(params.guildId);
 	const channels: APIChannel[] = await getChannels(guild.id);
-	const data = await apiFetch<any>(`/guilds/${guild.id}/settings`);
-	// console.log(data);
+	await apiFetch<any>(`/guilds/${guild.id}/settings`);
+	const channelsList: { label: string; value: string }[] = [];
+	channels.forEach((c) => {
+		channelsList.push({ label: c.name!, value: c.id });
+	});
 
 	return (
 		<Shell layout="dashboard">
@@ -41,13 +45,15 @@ export default async function Logging({
 				description="Change the logging settings of the server"
 				title={`Logging settings for ${guild.name}`}
 			/>
-			{JSON.stringify(channels.map((channel) => channel.name))}
+			<SelectOne
+				channels={...channelsList}
+				onChange={() => console.log("Changed")}
+			/>
 			<Textarea
 				rows={1}
 				className="w-full p-2 border resize-none"
 				placeholder="Type your stuff here"
 			/>
-			{JSON.stringify(data)}
 		</Shell>
 	);
 }

@@ -23,26 +23,30 @@ async function getUserGuilds(userAccessToken: string) {
 		throw new UnauthorizedError();
 	}
 
-	const res = await fetch(`${DISCORD_API_URL}/users/@me/guilds`, {
-		method: "GET",
-		headers: {
-			"Authorization": `Bearer ${userAccessToken}`,
-		},
-	});
-	const data: PartialGuild[] = await res.json();
+	const res = await axios.get<PartialGuild[]>(
+		`${DISCORD_API_URL}/users/@me/guilds`,
+		{
+			headers: {
+				"Authorization": `Bearer ${userAccessToken}`,
+			},
+		}
+	);
+
+	const data = res.data;
 	return data;
 }
 
-async function getBotGuilds() {
-	const res = await fetch(`${DISCORD_API_URL}/users/@me/guilds`, {
-		method: "GET",
-		headers: {
-			"Authorization": `Bot ${DISCORD_TOKEN}`,
-		},
-	});
+async function getBotGuilds(): Promise<PartialGuild[]> {
+	const res = await axios.get<PartialGuild[]>(
+		`${DISCORD_API_URL}/users/@me/guilds`,
+		{
+			headers: {
+				"Authorization": `Bot ${DISCORD_TOKEN}`,
+			},
+		}
+	);
 
-	const data: PartialGuild[] = await res.json();
-	return data;
+	return res.data;
 }
 
 export async function getMutualGuilds() {
@@ -54,6 +58,17 @@ export async function getMutualGuilds() {
 
 	const botGuilds = await getBotGuilds();
 	const userGuilds = await getUserGuilds(user.accessToken);
+	console.log(
+		`botguilds:`,
+		botGuilds[0].name,
+		`userguilds:`,
+		userGuilds[0].name
+	);
+
+	if (!userGuilds) {
+		throw new UnauthorizedError();
+	}
+
 	const adminUserGuilds = userGuilds.filter(
 		({ permissions }) => (parseInt(permissions) & 0x8) === 0x8
 	);
@@ -63,16 +78,14 @@ export async function getMutualGuilds() {
 }
 
 export async function getGuild(id: string) {
-	const res = await fetch(`${DISCORD_API_URL}/guilds/${id}`, {
-		method: "GET",
+	const res = await axios<PartialGuild>({
+		url: `${DISCORD_API_URL}/guilds/${id}`,
 		headers: {
-			"Authorization": `Bot ${DISCORD_TOKEN}`,
+			Authorization: `Bot ${DISCORD_TOKEN}`,
 		},
 	});
 
-	const data = await res.json();
-	if (data.code === 10004) return null;
-	return data as PartialGuild;
+	return res.data;
 }
 
 export async function getChannels(guildId: string) {
