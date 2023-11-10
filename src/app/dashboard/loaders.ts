@@ -78,8 +78,7 @@ export async function getMutualGuilds() {
 }
 
 export async function getGuild(id: string) {
-	const res = await axios<PartialGuild>({
-		url: `${DISCORD_API_URL}/guilds/${id}`,
+	const res = await axios.get<PartialGuild>(`${DISCORD_API_URL}/guilds/${id}`, {
 		headers: {
 			Authorization: `Bot ${DISCORD_TOKEN}`,
 		},
