@@ -2,6 +2,9 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { API_URL, DISCORD_TOKEN } from "./constants";
 
+export const sleep = (ms: number) =>
+	new Promise((resolve) => setTimeout(resolve, ms));
+
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }

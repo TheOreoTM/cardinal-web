@@ -1,8 +1,6 @@
-'use server';
+import { getServerSession } from "next-auth";
 
-import { getServerSession } from 'next-auth';
-
-import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route';
+import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function getSession() {
 	return getServerSession(nextAuthOptions);

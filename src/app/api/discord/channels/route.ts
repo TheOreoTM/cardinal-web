@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
 	const guildId = searchParams.get("guildId");
 	const res = await axios({
-		url: `${DISCORD_API_URL}/guilds/${guildId}`,
+		url: `${DISCORD_API_URL}/guilds/${guildId}/channels`,
 		method: "GET",
 		headers: {
 			Authorization: `Bot ${DISCORD_TOKEN}`,

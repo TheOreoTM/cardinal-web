@@ -3,7 +3,8 @@ import { UnauthorizedError } from "@/util/exceptions";
 import { getCurrentUser } from "@/util/session";
 import type { PartialGuild } from "@/util/types/discord";
 import axios from "axios";
-import type { APIChannel } from "discord-api-types/v9";
+import type { APIGuild, RESTGetAPIGuildResult } from "discord-api-types/v10";
+import type { GuildChannel } from "discord.js";
 
 export async function getStatus() {
 	const res = await fetch(`${API_URL}/status`, {
@@ -77,30 +78,14 @@ export async function getMutualGuilds() {
 	);
 }
 
-export async function getGuild(id: string) {
-	const res = await axios.get<PartialGuild>(`${DISCORD_API_URL}/guilds/${id}`, {
-		headers: {
-			Authorization: `Bot ${DISCORD_TOKEN}`,
-		},
-	});
+export async function getGuild(id: string): Promise<RESTGetAPIGuildResult> {
+	const res = await fetch(`/api/discord/guilds?guildId=${id}`);
 
-	return res.data;
+	return (await res.json()) as APIGuild;
 }
 
-export async function getChannels(guildId: string) {
-	const res = await axios({
-		url: `${DISCORD_API_URL}/guilds/${guildId}/channels`,
-		method: "GET",
-		headers: {
-			Authorization: `Bot ${DISCORD_TOKEN}`,
-		},
-	}).catch((e) => console.error(e));
+export async function getChannels(id: string) {
+	const res = await fetch(`api/discord/channels?guildId${id}`);
 
-	if (!res) {
-		return;
-	}
-
-	const channels = res.data.filter((channel: APIChannel) => channel.type === 0);
-
-	return channels;
+	return (await res.json()) as GuildChannel[];
 }

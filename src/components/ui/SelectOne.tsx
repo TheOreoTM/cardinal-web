@@ -20,10 +20,10 @@ import {
 
 export interface SelectOneProps {
 	channels: { label: string; value: string }[];
-	onChange(...args: any[]): void;
+	onUpdate(...args: any[]): void;
 }
 
-export function SelectOne({ channels, onChange }: SelectOneProps) {
+export function SelectOne({ channels, onUpdate }: SelectOneProps) {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState("");
 
@@ -53,7 +53,7 @@ export function SelectOne({ channels, onChange }: SelectOneProps) {
 								onSelect={(currentValue) => {
 									setValue(currentValue === value ? "" : currentValue);
 									setOpen(false);
-									onChange();
+									onUpdate();
 								}}>
 								{channel.label}
 								<CheckIcon

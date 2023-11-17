@@ -31,7 +31,8 @@
 			"@components/*": ["./src/components/*"],
 			"@util/*": ["./src/util/*"],
 			"@public": ["./public/*"],
-			"@style": ["./src/styles/globals.css"]
+			"@style": ["./src/styles/globals.css"],
+			"@material/*": ["./src/components/material/*"]
 		}
 	},
 	"include": [
