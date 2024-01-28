@@ -63,10 +63,12 @@
 	</svelte:fragment>
 
 	<!-- Sidebar (Left) -->
-	<svelte:fragment slot="sidebarLeft">HIHIHIHIHI</svelte:fragment>
+	<svelte:fragment slot="sidebarLeft"></svelte:fragment>
 
 	<!-- Page Content -->
-	<slot />
+	<div class="container p-10 mx-auto">
+		<slot />
+	</div>
 
 	<!-- Page Footer -->
 	<svelte:fragment slot="pageFooter"></svelte:fragment>
