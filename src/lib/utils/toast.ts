@@ -30,6 +30,9 @@ export function getExtendedToastStore() {
 				message,
 				background: 'variant-filled-error'
 			});
+		},
+		close: function (toastId: string) {
+			store.close(toastId);
 		}
 	};
 }
