@@ -4,15 +4,7 @@
 	// Highlight JS
 	import hljs from 'highlight.js/lib/core';
 	import 'highlight.js/styles/github-dark.css';
-	import {
-		AppBar,
-		AppShell,
-		Drawer,
-		Modal,
-		Toast,
-		initializeStores,
-		storeHighlightJs
-	} from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, Drawer, Modal, Toast, initializeStores, storeHighlightJs } from '@skeletonlabs/skeleton';
 	import xml from 'highlight.js/lib/languages/xml'; // for HTML
 	import css from 'highlight.js/lib/languages/css';
 	import javascript from 'highlight.js/lib/languages/javascript';
@@ -37,19 +29,19 @@
 	import '@fortawesome/fontawesome-free/css/fontawesome.css';
 	import '@fortawesome/fontawesome-free/css/brands.css';
 	import '@fortawesome/fontawesome-free/css/solid.css';
+	import GuildSideBar from '$components/navigation/GuildSideBar.svelte';
 
 	function matchPathWhitelist(pageUrlPath: string): boolean {
 		// If homepage route
 		if (pageUrlPath === '/') return true;
 		// If legal page
-		if (['/privacy', '/terms'].includes(pageUrlPath)) return true;
+		if (['/privacy', '/terms', '/manage'].includes(pageUrlPath)) return true;
 
 		return false;
 	}
 
-	$: slotSidebarLeft = matchPathWhitelist($page.url.pathname)
-		? 'w-0'
-		: 'bg-surface-50-900-token lg:w-auto';
+	$: slotSidebarLeft = matchPathWhitelist($page.url.pathname) ? 'w-0' : 'bg-surface-50-900-token lg:w-auto';
+	$: guild = $page.data.guild;
 </script>
 
 <Drawer />
@@ -63,7 +55,11 @@
 	</svelte:fragment>
 
 	<!-- Sidebar (Left) -->
-	<svelte:fragment slot="sidebarLeft"></svelte:fragment>
+	<svelte:fragment slot="sidebarLeft">
+		{#if guild}
+			<GuildSideBar />
+		{/if}
+	</svelte:fragment>
 
 	<!-- Page Content -->
 	<div class="container p-10 mx-auto">

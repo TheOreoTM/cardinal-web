@@ -9,7 +9,7 @@
 
 <div class="logo-cloud grid-cols-1 lg:!grid-cols-3 gap-1">
 	{#each mutual as guild}
-		<a href={`/manage/${guild.id}`} class="logo-item">
+		<a href={`/manage/${guild.id}`} class="logo-item" data-sveltekit-preload-data="hover">
 			<span><Avatar src={getGuildAvatarUrl(guild.id, guild.icon)} /></span>
 			<span class="text-xs"
 				>{guild.name}
@@ -18,7 +18,11 @@
 		</a>
 	{/each}
 	{#each unmutual as guild}
-		<a href={`/manage/${guild.id}`} class="logo-item opacity-50">
+		<a
+			href={`/manage/${guild.id}`}
+			class="logo-item opacity-50 hover:opacity-100 transition duration-200"
+			data-sveltekit-preload-data="off"
+		>
 			<span><Avatar src={getGuildAvatarUrl(guild.id, guild.icon)} /></span>
 			<span class="text-xs text-gray-300"
 				>{guild.name}

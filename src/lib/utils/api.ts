@@ -13,8 +13,8 @@ export const fetchGuild = async (guildId: string): Promise<APIGuild> => {
 
 	const json = await response.json();
 
-	if (json.error) {
-		throw json.error;
+	if (json.message) {
+		throw json.message;
 	}
 
 	return json;
