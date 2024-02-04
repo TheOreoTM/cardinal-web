@@ -9,6 +9,7 @@ export function getExtendedToastStore() {
 	const store = getToastStore();
 
 	return {
+		clear: store.clear,
 		trigger: store.trigger,
 		success: function (message: string) {
 			return this.trigger({

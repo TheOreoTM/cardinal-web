@@ -3,7 +3,6 @@ import { PUBLIC_BASE_API_URL, PUBLIC_BASE_WEB_URL } from '$env/static/public';
 import { ACCESS_TOKEN_COOKIE, BOT_ID, DISCORD_API_URL, REFRESH_TOKEN_COOKIE } from '$lib/constants';
 import type { Cookies } from '@sveltejs/kit';
 import type { APIGuild } from 'discord-api-types/v10';
-import { getExtendedToastStore } from './toast';
 
 export async function apiFetch<T>(path: string, options: RequestInit = {}) {
 	const response = await fetch(`${PUBLIC_BASE_API_URL}${path}`, {
@@ -11,6 +10,7 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}) {
 		credentials: 'include',
 		headers: {
 			...options.headers,
+			Authorization: `Bot ${DISCORD_TOKEN}`,
 			'Content-Type': 'application/json'
 		}
 	});
