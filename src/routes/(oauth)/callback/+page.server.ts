@@ -1,4 +1,8 @@
-import { buildSearchParams, requestDiscordToken, setCookies } from '$lib/utils/api';
+import {
+	buildSearchParams,
+	requestDiscordToken,
+	setCookies
+} from '$lib/utils/api';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({
@@ -14,7 +18,7 @@ export const load: PageServerLoad = async ({
 	}
 	try {
 		const tokens = await requestDiscordToken(
-			buildSearchParams('identify guilds', 'callback', returnCode)
+			buildSearchParams('callback', returnCode)
 		);
 		setCookies(tokens, cookies);
 		return { loggedIn: true };

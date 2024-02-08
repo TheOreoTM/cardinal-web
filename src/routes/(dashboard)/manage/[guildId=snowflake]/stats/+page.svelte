@@ -19,22 +19,34 @@
 		toast.error('Failed to save settings');
 	}
 
+	function warnPremium() {
+		toast.clear();
+		toast.warning(
+			'You need premium to set the lookback amount higher than 30 days.'
+		);
+	}
+
+	function warnRange() {
+		toast.clear();
+		toast.error('Lookback amount must be between 1 and 30');
+	}
+
+	function warnNumber() {
+		toast.clear();
+		toast.error('Lookback amount must be a number');
+	}
+
 	function handleSave(setting: { [key: string]: any }) {
 		save(guild.id, 'stats', setting, saveSuccessful, saveFailed);
 	}
 
 	function isValidlookback(value: number) {
-		if (guildData.premium) {
-			return value >= 1 && value <= 365;
-		} else if (!guildData.premium) {
-			return value >= 1 && value <= 30;
-		}
+		return value >= 1 && value <= maxValue;
 	}
 
 	function handleLookbackInput(event: Event) {
 		if (!(event.target instanceof HTMLInputElement)) return;
 		let value = parseInt(event.target.value, 10);
-		const maxValue = guildData.premium ? 365 : 30;
 
 		const valid = isValidlookback(value);
 
@@ -46,15 +58,13 @@
 			// If outside the range, set it to the nearest limit
 			// values.lookback = Math.min(Math.max(value, 1), maxValue);
 			if (isNaN(value)) {
-				toast.error('Lookback amount must be a number');
+				warnNumber();
 				return;
 			}
 			if (value > 30 && !guildData.premium) {
-				toast.warning(
-					'You need premium to set the lookback amount higher than 30 days.'
-				);
+				warnPremium();
 			} else {
-				toast.error(`Lookback amount must be between 1 and ${maxValue}`);
+				warnRange();
 			}
 		}
 	}
@@ -63,6 +73,7 @@
 
 	const guild = data.guild;
 	const guildData = data.data;
+	const maxValue = guildData.premium ? 365 : 30;
 
 	let defaults = {
 		lookback: guildData.lookback
@@ -80,7 +91,10 @@
 	description="Manage the lookback amount for the server and view basic server stats"
 />
 <div class="space-y-6">
-	<SettingsCard title="Lookback" documentation={true}>
+	<SettingsCard
+		title="Lookback"
+		documentation="The historic lookback for stats commands"
+	>
 		<p>
 			How much days should the bot take into consideration when displaying stats
 			(higher = slower)
@@ -97,11 +111,17 @@
 					max="30"
 				/>
 				<button
+					disabled={values.lookback === defaults.lookback}
 					on:click={() => {
 						if (isValidlookback(values.lookback)) {
 							handleSave({ lookback: values.lookback });
+							defaults.lookback = values.lookback;
 						} else {
-							toast.error('Lookback amount must be between 1 and 30');
+							if (!guildData.premium && values.lookback > 30) {
+								warnPremium();
+							} else {
+								warnRange();
+							}
 						}
 					}}
 					class="btn variant-filled-primary">Update</button

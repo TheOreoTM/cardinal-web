@@ -1,4 +1,7 @@
-import { PUBLIC_BASE_WEB_URL, PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
+import {
+	PUBLIC_BASE_WEB_URL,
+	PUBLIC_DISCORD_OAUTH_CLIENT_ID
+} from '$env/static/public';
 
 export const PathNames = {
 	Home: '/',
@@ -7,7 +10,8 @@ export const PathNames = {
 	Logout: '/logout',
 	Invite: '/invite',
 	Docs: '/docs',
-	Manage: '/manage'
+	Manage: '/manage',
+	Premium: '/premium'
 };
 
 export const BOT_ID = PUBLIC_DISCORD_OAUTH_CLIENT_ID;

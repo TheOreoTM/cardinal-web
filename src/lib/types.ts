@@ -1,4 +1,4 @@
-export type DashboardSetting = 'stats' | 'moderation' | 'logging';
+export type DashboardSetting = 'stats' | 'moderation' | 'logging' | 'bot';
 
 export interface GuildData {
 	guildId: string;

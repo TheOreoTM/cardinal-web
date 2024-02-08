@@ -33,7 +33,6 @@ export function save(
 	const value = setting[settingKey];
 	saveData(guildId, module, settingKey, value)
 		.then((r) => {
-			console.log(r);
 			saveSuccessful();
 		})
 		.catch(() => {

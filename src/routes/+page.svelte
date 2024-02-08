@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '$components/Meta.svelte';
 	import { getToastStore } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 
@@ -23,3 +24,5 @@
 
 	const toastStore = getToastStore();
 </script>
+
+<Meta title="Home" />

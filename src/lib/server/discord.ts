@@ -1,9 +1,15 @@
 import { DISCORD_API_URL } from '$lib/constants';
-import { requestDiscordToken, buildSearchParams, setCookies } from '$lib/utils/api';
+import {
+	requestDiscordToken,
+	buildSearchParams,
+	setCookies
+} from '$lib/utils/api';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { APIUser } from 'discord-api-types/v10';
 
-export async function authenticateUser(event: RequestEvent): Promise<APIUser | null> {
+export async function authenticateUser(
+	event: RequestEvent
+): Promise<APIUser | null> {
 	const token = await getOrRefreshToken(event);
 	if (!token) {
 		return null;
@@ -14,7 +20,9 @@ export async function authenticateUser(event: RequestEvent): Promise<APIUser | n
 	}).then((request) => request.json());
 }
 
-export async function getOrRefreshToken(event: RequestEvent): Promise<string | null> {
+export async function getOrRefreshToken(
+	event: RequestEvent
+): Promise<string | null> {
 	const token = event.cookies?.get('discord_access_token');
 	if (token) {
 		return token;
@@ -25,7 +33,7 @@ export async function getOrRefreshToken(event: RequestEvent): Promise<string | n
 	const refreshToken = event.cookies?.get('discord_refresh_token');
 	if (refreshToken && !event.url.pathname.startsWith('/api/discord/refresh')) {
 		const tokens = await requestDiscordToken(
-			buildSearchParams('identify email', 'refresh', refreshToken)
+			buildSearchParams('refresh', refreshToken)
 		);
 		setCookies(tokens, event.cookies);
 		return tokens.access_token;

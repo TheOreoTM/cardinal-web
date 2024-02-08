@@ -1,6 +1,14 @@
-import { DISCORD_OAUTH_CLIENT_SECRET, DISCORD_TOKEN } from '$env/static/private';
+import {
+	DISCORD_OAUTH_CLIENT_SECRET,
+	DISCORD_TOKEN
+} from '$env/static/private';
 import { PUBLIC_BASE_API_URL, PUBLIC_BASE_WEB_URL } from '$env/static/public';
-import { ACCESS_TOKEN_COOKIE, BOT_ID, DISCORD_API_URL, REFRESH_TOKEN_COOKIE } from '$lib/constants';
+import {
+	ACCESS_TOKEN_COOKIE,
+	BOT_ID,
+	DISCORD_API_URL,
+	REFRESH_TOKEN_COOKIE
+} from '$lib/constants';
 import type { Cookies } from '@sveltejs/kit';
 import type { APIGuild } from 'discord-api-types/v10';
 
@@ -72,7 +80,9 @@ export const fetchUserGuilds = async (token: string): Promise<APIGuild[]> => {
 	return response;
 };
 
-export const requestDiscordToken = async (searchParams: URLSearchParams): Promise<Tokens> => {
+export const requestDiscordToken = async (
+	searchParams: URLSearchParams
+): Promise<Tokens> => {
 	// performing a Fetch request to Discord's token endpoint
 	const request = await fetch(`${DISCORD_API_URL}/oauth2/token`, {
 		method: 'POST',
@@ -97,14 +107,20 @@ export const requestDiscordToken = async (searchParams: URLSearchParams): Promis
 	};
 };
 
-export function buildSearchParams(scope: string, type: 'callback' | 'refresh', code: string): URLSearchParams {
+export function buildSearchParams(
+	type: 'callback' | 'refresh',
+	code: string
+): URLSearchParams {
 	const searchParams = new URLSearchParams();
 	searchParams.append('client_id', BOT_ID);
 	searchParams.append('client_secret', DISCORD_OAUTH_CLIENT_SECRET);
-	searchParams.append('grant_type', type === 'callback' ? 'authorization_code' : 'refresh_token');
+	searchParams.append(
+		'grant_type',
+		type === 'callback' ? 'authorization_code' : 'refresh_token'
+	);
 	searchParams.append(type === 'callback' ? 'code' : 'refresh_token', code);
 	searchParams.append('redirect_uri', `${PUBLIC_BASE_WEB_URL}/callback`);
-	searchParams.append('scope', scope);
+	searchParams.append('scope', 'identify guilds');
 	return searchParams;
 }
 

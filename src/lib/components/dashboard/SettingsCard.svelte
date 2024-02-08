@@ -2,7 +2,7 @@
 	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
 
 	export let title: string;
-	export let documentation = false;
+	export let documentation: string | null = null;
 
 	const popupHover: PopupSettings = {
 		event: 'hover',
@@ -24,7 +24,7 @@
 					<span><i class="fa-solid fa-question text-base" /></span>
 				</button>
 				<div class="card p-4 variant-filled-surface" data-popup="popupHover">
-					<p class="text-sm">Hover Content</p>
+					<p class="text-sm">{documentation}</p>
 					<div class="arrow variant-filled-surface" />
 				</div>
 			{/if}
