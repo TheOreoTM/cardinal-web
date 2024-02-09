@@ -10,6 +10,7 @@
 	import { onMount } from 'svelte';
 	import { PathNames } from '$lib/constants';
 	import GlowButton from '$components/ui/GlowButton.svelte';
+	import { getGuildAvatarUrl } from '$lib/utils/common';
 
 	const toast = getExtendedToastStore();
 
@@ -119,7 +120,12 @@
 	});
 </script>
 
-<Meta title="Dashboard" guildName={data.guild.name} />
+<Meta
+	title="Dashboard"
+	blockRobots
+	logo={getGuildAvatarUrl(data.guild.id, data.guild.icon)}
+	guildName={data.guild.name}
+/>
 
 <div class="space-y-6">
 	<Heading title="Server Info" />

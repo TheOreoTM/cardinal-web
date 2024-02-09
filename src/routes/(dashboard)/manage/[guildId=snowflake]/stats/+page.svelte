@@ -6,6 +6,7 @@
 	import { getExtendedToastStore } from '$lib/utils/toast';
 	import { save } from '$lib/utils/saveLogic';
 	import Heading from '$components/ui/Heading.svelte';
+	import { getGuildAvatarUrl } from '$lib/utils/common';
 
 	const toast = getExtendedToastStore();
 
@@ -84,7 +85,12 @@
 	};
 </script>
 
-<Meta title="Stats" guildName={data.guild.name} />
+<Meta
+	title="Stats Settings"
+	blockRobots
+	logo={getGuildAvatarUrl(data.guild.id, data.guild.icon)}
+	guildName={data.guild.name}
+/>
 
 <Heading
 	title="Stats Tracking"
