@@ -5,7 +5,7 @@ import { PathNames } from '../../../lib/constants';
 
 export const load = (async ({ cookies }) => {
 	deleteCookies(cookies);
-	throw redirect(
+	return redirect(
 		302,
 		`${PathNames.Home}?message=${encodeURIComponent('Logged out')}`
 	);
