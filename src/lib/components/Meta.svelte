@@ -47,5 +47,5 @@
 />
 
 <svelte:head>
-	<meta name="theme-color" data-react-helmet="true" content="#006BFC" />
+	<meta name="theme-color" data-react-helmet="true" content="#959595" />
 </svelte:head>

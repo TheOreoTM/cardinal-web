@@ -18,7 +18,7 @@
 	const guildName = guild.name;
 </script>
 
-<AppRail class="h-[100%]">
+<AppRail class="min-h-screen">
 	<svelte:fragment slot="lead">
 		<!-- <AppRailAnchor href={PathNames.Manage}>
 			<svelte:fragment slot="lead"
