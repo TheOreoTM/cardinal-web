@@ -27,11 +27,11 @@ export const load: PageServerLoad = async ({
 			302,
 			`${PathNames.Home}?message=${encodeURIComponent('Logged in successfully')}`
 		);
-	} catch (e) {
+	} catch (e: any) {
 		console.error(e);
 		throw redirect(
 			302,
-			`${PathNames.Home}?error=${encodeURIComponent(`${e}` ?? 'Unknown error')}`
+			`${PathNames.Home}?error=${encodeURIComponent(`${e.message}` ?? 'Unknown error')}`
 		);
 	}
 };
