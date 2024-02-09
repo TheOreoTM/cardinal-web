@@ -14,6 +14,7 @@ export const PathNames = {
 	Premium: '/premium'
 };
 
+export const KoFi = 'https://ko-fi.com/theoreotm';
 export const BOT_ID = PUBLIC_DISCORD_OAUTH_CLIENT_ID;
 export const ACCESS_TOKEN_COOKIE = 'discord_access_token';
 export const REFRESH_TOKEN_COOKIE = 'discord_refresh_token';

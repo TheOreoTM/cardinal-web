@@ -3,7 +3,9 @@ import {
 	requestDiscordToken,
 	setCookies
 } from '$lib/utils/api';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { PathNames } from '$lib/constants';
 
 export const load: PageServerLoad = async ({
 	url,
@@ -21,9 +23,15 @@ export const load: PageServerLoad = async ({
 			buildSearchParams('callback', returnCode)
 		);
 		setCookies(tokens, cookies);
-		return { loggedIn: true };
+		throw redirect(
+			302,
+			`${PathNames.Home}?message=${encodeURIComponent('Logged in successfully')}`
+		);
 	} catch (e) {
 		console.error(e);
-		return { loggedIn: false, error: 'Failed to authenticate with Discord.' };
+		throw redirect(
+			302,
+			`${PathNames.Home}?error=${encodeURIComponent(`${e}` ?? 'Unknown error')}`
+		);
 	}
 };

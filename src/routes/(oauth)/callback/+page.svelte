@@ -18,7 +18,11 @@
 		</p>
 	</Redirect>
 {:else}
-	<Redirect pageName="Manage" delay={null} to={PathNames.Manage}>
+	<Redirect
+		pageName="Manage"
+		delay={null}
+		to={`${PathNames.Home}?message=${encodeURIComponent('Logged in successfully')}`}
+	>
 		<h1 class="h1">You have been logged in.</h1>
 	</Redirect>
 {/if}

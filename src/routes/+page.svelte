@@ -20,6 +20,14 @@
 				background: 'variant-filled-warning'
 			});
 		}
+
+		if (data.message) {
+			toastStore.trigger({
+				message: data.message,
+				timeout: 8000,
+				background: 'variant-filled-primary'
+			});
+		}
 	});
 
 	const toastStore = getToastStore();

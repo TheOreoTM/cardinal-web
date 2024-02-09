@@ -53,6 +53,7 @@
 		if (json.error) {
 			toast.error('Failed to update nickname, please try again later.');
 		} else {
+			defaults.nickname = values.nickname;
 			toast.success('Nickname updated successfully');
 		}
 	}
@@ -65,7 +66,7 @@
 		return nickname.length <= 32;
 	}
 
-	function handleLookbackInput(event: Event) {
+	function handlePrefixInput(event: Event) {
 		if (!(event.target instanceof HTMLInputElement)) return;
 		let prefix = event.target.value;
 
@@ -176,7 +177,7 @@
 						placeholder={defaults.prefix}
 						id="prefix"
 						bind:value={values.prefix}
-						on:input={handleLookbackInput}
+						on:input={handlePrefixInput}
 						min="1"
 						max="10"
 					/>
@@ -207,9 +208,8 @@
 						bind:value={values.nickname}
 					/>
 					<button
-						on:click={async () => {
-							await updateNickname();
-						}}
+						disabled={values.nickname === defaults.nickname}
+						on:click={updateNickname}
 						class="btn variant-filled-primary"
 					>
 						Set Nickname
