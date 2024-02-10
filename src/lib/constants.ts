@@ -11,7 +11,8 @@ export const PathNames = {
 	Invite: '/invite',
 	Docs: '/docs',
 	Manage: '/manage',
-	Premium: '/premium'
+	Premium: '/premium',
+	Commands: '/commands'
 };
 
 export const KoFi = 'https://ko-fi.com/theoreotm';

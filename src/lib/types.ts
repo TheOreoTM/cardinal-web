@@ -108,3 +108,65 @@ interface RestrictionNode {
 	allow: string[];
 	deny: string[];
 }
+
+export interface FlattenedCommand {
+	category: string;
+
+	description: string;
+
+	detailedDescription: ExtendedHelp & { prefix: string };
+
+	guarded: boolean;
+
+	name: string;
+
+	permissionLevel: number;
+
+	preconditions: Preconditions;
+}
+
+export interface Preconditions {
+	entries: PreconditionsEntry[];
+
+	mode: number;
+
+	runCondition: number;
+}
+
+export interface PreconditionsEntry {
+	entries: PreconditionEntryEntry[];
+
+	mode: number;
+
+	runCondition: number;
+}
+
+export interface PreconditionEntryEntry {
+	context: unknown;
+
+	name: string;
+}
+
+interface ExtendedHelp {
+	examples?: (null | string)[];
+
+	explainedUsage?: [string, string][];
+
+	extendedHelp?: string;
+
+	possibleFormats?: [string, string][];
+
+	reminder?: string;
+
+	usages?: string[];
+}
+
+export const enum PermissionLevels {
+	Everyone = 0,
+	Trainee = 3,
+	Staff = 4,
+	Moderator = 5,
+	Administrator = 6,
+	ServerOwner = 7,
+	BotOwner = 10
+}

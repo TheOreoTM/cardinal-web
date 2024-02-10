@@ -79,6 +79,14 @@
 			<span class="ml-2">Docs</span>
 		</a>
 		<a
+			href={PathNames.Commands}
+			rel="noopener noreferrer"
+			class="btn variant-ghost-primary hidden sm:block"
+		>
+			<i class="fa-solid fa-book" />
+			<span class="ml-2">Commands</span>
+		</a>
+		<a
 			href={PathNames.Discord}
 			target="_blank"
 			rel="noopener noreferrer"
