@@ -74,7 +74,6 @@
 											>{command.detailedDescription.prefix}{command.name}
 											{usage}
 										</code>
-										<br />
 									{/each}
 								</span>
 							{/if}
