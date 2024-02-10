@@ -6,12 +6,9 @@ import {
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { PathNames } from '$lib/constants';
+import { browser } from '$app/environment';
 
-export const load: PageServerLoad = async ({
-	url,
-	cookies,
-	locals
-}): Promise<{ loggedIn: boolean; error?: string }> => {
+export const load: PageServerLoad = async ({ url, cookies, locals }) => {
 	if (locals.user) return { loggedIn: true };
 	// fetch returnCode set in the URL parameters.
 	const returnCode = url.searchParams.get('code');
@@ -23,15 +20,16 @@ export const load: PageServerLoad = async ({
 			buildSearchParams('callback', returnCode)
 		);
 		setCookies(tokens, cookies);
-		return redirect(
-			302,
-			`${PathNames.Home}?message=${encodeURIComponent('Logged in successfully')}`
-		);
 	} catch (e: any) {
 		console.error(e);
-		return redirect(
+		redirect(
 			302,
 			`${PathNames.Home}?error=${encodeURIComponent(`${e.message}` ?? 'Unknown error')}`
 		);
 	}
+
+	redirect(
+		302,
+		`${PathNames.Home}?message=${encodeURIComponent('Logged in successfully')}`
+	);
 };
