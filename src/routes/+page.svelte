@@ -3,9 +3,18 @@
 	import GlowButton from '$components/ui/GlowButton.svelte';
 	import ZPattern from '$components/ui/ZPattern.svelte';
 	import { getToastStore } from '@skeletonlabs/skeleton';
+	import Typewriter from 'svelte-typewriter';
 	import { onMount } from 'svelte';
 
 	export let data;
+
+	const words = [
+		'Giveaways',
+		'AFK handling',
+		'Automod',
+		'Moderation',
+		'Server Management'
+	];
 
 	onMount(() => {
 		if (data.error) {
@@ -38,15 +47,29 @@
 <Meta title="Home" />
 
 <div class="flex flex-col items-center space-y-10">
-	<div class="uppercase font-bold text-center">
-		<h1 class="h1">
+	<div>
+		<h1 class="h1 uppercase font-bold text-center">
 			<span class="gradient-header">Cardinal Bot</span>
 		</h1>
 		<hr class="opacity-60 !mb-10 !mt-2 mx-auto w-[40%]" />
+		<div class="text-center text-lg">
+			Your go-to Discord bot for <br />
+			<div class="items-center min-h-9">
+				<Typewriter
+					mode="loop"
+					interval={60}
+					wordInterval={2000}
+					cursor={false}
+				>
+					{#each words as word}
+						<span class="highlight text-2xl font-bold">{word}</span>
+					{/each}
+				</Typewriter>
+			</div>
+			Elevate your server experience effortlessly!
+		</div>
 	</div>
-	Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit temporibus
-	atque perspiciatis culpa saepe corrupti nisi, velit quos nostrum harum accusamus
-	amet quaerat dolore eligendi itaque autem cumque dolorem. Nobis!
+
 	<div class="flex flex-row space-x-4">
 		<GlowButton size="btn-xl">Invite to Server</GlowButton>
 		<div class="hidden sm:block">
