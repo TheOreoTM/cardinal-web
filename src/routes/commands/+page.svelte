@@ -43,10 +43,9 @@
 	{/each}
 	<svelte:fragment slot="panel">
 		<Accordion
-			autocollapse
 			class="card p-4 text-token"
 			spacing="space-y-2"
-			regionPanel="bg-surface-900"
+			regionPanel="bg-surface-900 pb-5"
 		>
 			{#each filteredCommands[tabSet].commands as command}
 				<AccordionItem open={false}>
@@ -70,30 +69,32 @@
 								<span
 									><p class="font-bold text-lg">Usage:</p>
 									{#each command.detailedDescription.usages as usage}
-										<code
+										<code class="code"
 											>{command.detailedDescription.prefix}{command.name}
 											{usage}
 										</code>
+										<br />
 									{/each}
 								</span>
+								<hr class="!my-3 opacity-50" />
 							{/if}
 							{#if command.detailedDescription.explainedUsage}
 								<span
 									><p class="font-bold text-lg">Explained Usage:</p>
 									{#each command.detailedDescription.explainedUsage as eusage}
-										<div class="flex flex-row space-x-1">
+										<div class="flex flex-row space-x-1 text-sm">
 											<span class="font-semibold">{eusage[0]}: </span>
 											{@html marked(eusage[1])}
 										</div>
-										<br />
 									{/each}
 								</span>
+								<hr class="!my-3 opacity-50" />
 							{/if}
 							{#if command.detailedDescription.examples}
 								<span
 									><p class="font-bold text-lg">Example:</p>
 									{#each command.detailedDescription.examples as example}
-										<code
+										<code class="code"
 											>{command.detailedDescription.prefix}{command.name}
 											{example}
 										</code>

@@ -85,13 +85,13 @@
 					<ul>
 						<li>
 							<a href={PathNames.Docs}>
-								<!-- <i class="fa-solid fa-book" /> -->
+								<i class="fa-solid fa-book" />
 								<span class="">Docs</span>
 							</a>
 						</li>
 						<li>
 							<a href={PathNames.Commands}>
-								<!-- <i class="fa-solid fa-book" /> -->
+								<i class="fa-solid fa-list" />
 								<span class="">Commands</span>
 							</a>
 						</li>
@@ -99,25 +99,35 @@
 				</nav>
 			</div>
 		</div>
+		<!-- Links -->
 		<div class="relative hidden sm:block">
-			<a
-				href={PathNames.Discord}
-				target="_blank"
-				rel="noopener noreferrer"
-				class="btn variant-ghost-primary"
+			<!-- trigger -->
+			<button
+				class="btn hover:variant-soft-primary"
+				use:popup={{ event: 'click', target: 'links' }}
 			>
-				<!-- <i class="fa-brands fa-discord" /> -->
-				<span class="">Support</span>
-			</a>
-			<a
-				href={PathNames.Invite}
-				target="_blank"
-				rel="noopener noreferrer"
-				class="btn variant-ghost-primary"
-			>
-				<!-- <i class="fa-solid fa-plus" /> -->
-				<span class="">Invite</span>
-			</a>
+				<span>Links</span>
+				<i class="fa-solid fa-caret-down opacity-50" />
+			</button>
+			<div class="card p-4 w-60 shadow-xl" data-popup="links">
+				<nav class="list-nav">
+					<ul>
+						<li>
+							<a href={PathNames.Discord} target="_blank">
+								<i class="fa-brands fa-discord" />
+								<span class="">Support Server</span>
+							</a>
+						</li>
+						<li>
+							<a href={PathNames.Invite} target="_blank">
+								<i class="fa-solid fa-plus" />
+								<span class="">Add Bot</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+
 			{#if user}
 				<a href={PathNames.Manage} class="btn variant-ghost-primary">
 					<!-- <i class="fa-solid fa-bars-progress"></i> -->
@@ -125,7 +135,7 @@
 				</a>
 			{/if}
 		</div>
-		{#if user}
+		{#if user?.username}
 			<button
 				on:click={userMenuOpen}
 				class="btn variant-glass-primary space-x-2 rounded-md flex items-center px-2"

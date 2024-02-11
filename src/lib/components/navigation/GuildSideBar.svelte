@@ -43,7 +43,6 @@
 	<!-- --- -->
 
 	<AppRailAnchor
-		data-sveltekit-preload-data="hover"
 		href={pathName('moderation')}
 		selected={currentPath === pathName('moderation')}
 		name="tile-1"
@@ -56,7 +55,6 @@
 		<span>Moderation</span>
 	</AppRailAnchor>
 	<AppRailAnchor
-		data-sveltekit-preload-data="hover"
 		href={pathName('stats')}
 		selected={currentPath === pathName('stats')}
 		name="tile-2"
@@ -69,7 +67,6 @@
 		<span>Stats</span>
 	</AppRailAnchor>
 	<AppRailAnchor
-		data-sveltekit-preload-data="hover"
 		href={pathName('logging')}
 		selected={currentPath === pathName('logging')}
 		name="tile-3"

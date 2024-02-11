@@ -1,13 +1,29 @@
 <script>
 	import { PathNames } from '$lib/constants';
+	import { getDrawerStore } from '@skeletonlabs/skeleton';
+
+	const drawer = getDrawerStore();
 </script>
 
 <div class="h-full bg-surface-50-900-token border-r border-surface-500/30">
 	<section class="p-4 space-y-4 overflow-y-auto">
 		<div class="container p-2 mx-auto flex flex-col space-y-1">
 			<a
+				href={PathNames.Manage}
+				on:click={() => {
+					drawer.close();
+				}}
+				class="btn variant-ringed-surface"
+			>
+				<i class="fa-solid fa-cog" />
+				<span class="ml-2">Dashboard</span>
+			</a>
+			<a
 				href={PathNames.Docs}
 				target="_blank"
+				on:click={() => {
+					drawer.close();
+				}}
 				rel="noopener noreferrer"
 				class="btn variant-ringed-surface"
 			>
@@ -17,6 +33,9 @@
 			<a
 				href={PathNames.Discord}
 				target="_blank"
+				on:click={() => {
+					drawer.close();
+				}}
 				rel="noopener noreferrer"
 				class="btn variant-ringed-surface"
 			>
@@ -26,6 +45,9 @@
 			<a
 				href={PathNames.Invite}
 				target="_blank"
+				on:click={() => {
+					drawer.close();
+				}}
 				rel="noopener noreferrer"
 				class="btn variant-ringed-surface"
 			>
@@ -35,6 +57,9 @@
 			<a
 				href={PathNames.Logout}
 				rel="noopener noreferrer"
+				on:click={() => {
+					drawer.close();
+				}}
 				class="btn variant-ghost-error"
 			>
 				<i class="fa-solid fa-arrow-right-from-bracket" />
