@@ -29,6 +29,7 @@
 		<AppRailAnchor
 			selected={currentPath === pathName(guildId)}
 			href={`${PathNames.Manage}/${guildId}`}
+			title="Home"
 		>
 			<svelte:fragment slot="lead">
 				<img alt={guildName} class="rounded-full w-12" src={guildAvatar} />
@@ -45,9 +46,9 @@
 	<AppRailAnchor
 		href={pathName('moderation')}
 		selected={currentPath === pathName('moderation')}
-		name="tile-1"
+		name="moderation"
 		value={0}
-		title="tile-1"
+		title="Moderation"
 	>
 		<svelte:fragment slot="lead"
 			><i class="fa-solid fa-gavel text-2xl" /></svelte:fragment
@@ -57,9 +58,9 @@
 	<AppRailAnchor
 		href={pathName('stats')}
 		selected={currentPath === pathName('stats')}
-		name="tile-2"
+		name="stats"
 		value={1}
-		title="tile-2"
+		title="Stats"
 	>
 		<svelte:fragment slot="lead"
 			><i class="fa-solid fa-trophy text-2xl" /></svelte:fragment
@@ -69,9 +70,9 @@
 	<AppRailAnchor
 		href={pathName('logging')}
 		selected={currentPath === pathName('logging')}
-		name="tile-3"
+		name="logging"
 		value={2}
-		title="tile-3"
+		title="Logging"
 	>
 		<svelte:fragment slot="lead"
 			><i class="fa-regular fa-clipboard text-2xl" /></svelte:fragment

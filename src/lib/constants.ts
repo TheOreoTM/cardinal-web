@@ -12,7 +12,14 @@ export const PathNames = {
 	Docs: '/docs',
 	Manage: '/manage',
 	Premium: '/premium',
-	Commands: '/commands'
+	Commands: '/commands',
+	Github: 'https://github.com/theoreotm/cardinal-bot',
+	Kofi: '/kofi',
+	Terms: '/terms',
+	Privacy: '/privacy',
+	Status: '/status',
+	Metrics: '/metrics',
+	Patreon: '/patreon'
 };
 
 export const KoFi = 'https://ko-fi.com/theoreotm';

@@ -4,6 +4,7 @@ import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 import { skeleton } from '@skeletonlabs/tw-plugin';
 import { cardinal_theme } from './src/cardinal_theme';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	darkMode: 'class',
@@ -15,7 +16,11 @@ export default {
 		)
 	],
 	theme: {
-		extend: {}
+		extend: {
+			fontFamily: {
+				sans: ['Inter', ...defaultTheme.fontFamily.sans]
+			}
+		}
 	},
 	plugins: [
 		forms,

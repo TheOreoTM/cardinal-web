@@ -46,6 +46,7 @@
 	import '@fortawesome/fontawesome-free/css/solid.css';
 	import GuildSideBar from '$components/navigation/GuildSideBar.svelte';
 	import HamburgerMenu from '$components/drawers/HamburgerMenu.svelte';
+	import Footer from '$components/navigation/Footer.svelte';
 
 	function matchPathWhitelist(pageUrlPath: string): boolean {
 		// If homepage route
@@ -98,5 +99,9 @@
 	</div>
 
 	<!-- Page Footer -->
-	<svelte:fragment slot="pageFooter"></svelte:fragment>
+	<svelte:fragment slot="pageFooter">
+		<div class="px-10">
+			<Footer />
+		</div>
+	</svelte:fragment>
 </AppShell>

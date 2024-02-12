@@ -6,11 +6,11 @@
 	class="flex flex-col md:flex-row text-white text-center md:text-left mx-auto w-full items-center"
 >
 	{#if isOdd}
-		<div class="flex flex-col gap-y-8 mb-8">
-			<h3 class="h3 font-semibold md:text-center lg:text-left">
+		<div class="flex flex-col gap-y-4 mb-8">
+			<h2 class="h2 font-semibold md:text-center lg:text-left">
 				<slot name="header" />
 				<hr class="!my-2 lg:w-[30%] md:w-[50%] lg:mx-0 md:mx-auto" />
-			</h3>
+			</h2>
 			<p class="text-white text-sm">
 				<slot name="body" />
 			</p>
@@ -19,11 +19,11 @@
 			<slot name="preview" />
 		</div>
 	{:else}
-		<div class="flex flex-col gap-y-8 mb-8 md:order-2 md:ml-auto">
-			<h3 class="h3 font-semibold md:text-center lg:text-left">
+		<div class="flex flex-col gap-y-4 mb-8 md:order-2 md:ml-auto">
+			<h2 class="h2 font-semibold md:text-center lg:text-left">
 				<slot name="header" />
 				<hr class="!my-2 lg:w-[30%] md:w-[50%] lg:mx-0 md:mx-auto" />
-			</h3>
+			</h2>
 			<p class="text-white text-sm">
 				<slot name="body" />
 			</p>

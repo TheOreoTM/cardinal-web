@@ -5,10 +5,11 @@
 	import { getToastStore } from '@skeletonlabs/skeleton';
 	import Typewriter from 'svelte-typewriter';
 	import { onMount } from 'svelte';
+	import { PathNames } from '$lib/constants.js';
 
 	export let data;
 
-	const words = [
+	const features = [
 		'Giveaways',
 		'AFK handling',
 		'Automod',
@@ -48,21 +49,22 @@
 
 <div class="flex flex-col items-center space-y-10">
 	<div>
-		<h1 class="h1 uppercase font-bold text-center">
+		<h1 class="h1 text-5xl uppercase font-extrabold font-sans text-center">
 			<span class="gradient-header">Cardinal Bot</span>
 		</h1>
 		<hr class="opacity-60 !mb-10 !mt-2 mx-auto w-[40%]" />
 		<div class="text-center text-lg">
 			Your go-to Discord bot for <br />
-			<div class="items-center min-h-9">
+			<div class="items-center min-h-10">
 				<Typewriter
 					mode="loop"
 					interval={60}
+					unwriteInterval={50}
 					wordInterval={2000}
 					cursor={false}
 				>
-					{#each words as word}
-						<span class="highlight text-2xl font-bold">{word}</span>
+					{#each features as word}
+						<span class="highlight text-3xl font-bold">{word}</span>
 					{/each}
 				</Typewriter>
 			</div>
@@ -70,18 +72,20 @@
 		</div>
 	</div>
 
-	<div class="flex flex-row space-x-4">
-		<GlowButton size="btn-xl">Invite to Server</GlowButton>
+	<div class="flex flex-row pt-4">
+		<GlowButton href={PathNames.Invite} size="btn-xl"
+			>Invite to Server</GlowButton
+		>
 		<div class="hidden sm:block">
-			<GlowButton
+			<!-- <GlowButton
 				size="btn-xl"
 				bgColor="bg-primary-500"
 				shadowColor="shadow-primary-500">Dashboard</GlowButton
-			>
+			> -->
 		</div>
 	</div>
 </div>
-<div class="flex flex-col my-20 gap-y-20">
+<div class="flex flex-col my-20 gap-y-0">
 	<ZPattern isOdd>
 		<svelte:fragment slot="header">
 			<span class="highlight font-bold">Track</span> Stats Easily
@@ -94,9 +98,9 @@
 		</svelte:fragment>
 		<svelte:fragment slot="preview">
 			<img
-				src="https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg"
-				width="283"
-				height="283"
+				src="/images/preview/cardinal-stats.png"
+				width="1000"
+				height="1000"
 				alt=""
 				class="order-1 md:order-2 md:ml-auto"
 			/>
@@ -105,19 +109,60 @@
 
 	<ZPattern>
 		<svelte:fragment slot="header">
-			<span class="highlight font-bold">Lorem</span> Ipsum Dolor
+			<span class="highlight font-bold">Moderate</span> Members Conveniently
 		</svelte:fragment>
 		<svelte:fragment slot="body">
-			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam dolor,
-			nemo repellendus atque consectetur adipisci officiis rerum cupiditate
-			iusto perspiciatis ratione eveniet, est recusandae voluptas veritatis ea
-			at quam! Asperiores?
+			Cardinal offers all the standard moderation commands you expect, like
+			banning, muting, kicking and more. However, she also includes unique
+			features such as being able to look at the actions a certain staff member
+			has taken on any member. For a full list of moderation commands, visit the
+			commands page.
 		</svelte:fragment>
 		<svelte:fragment slot="preview">
 			<img
-				src="https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg"
-				width="283"
-				height="283"
+				src="/images/preview/cardinal-mute.png"
+				width="1000"
+				height="1000"
+				alt=""
+				class="md:ml-auto"
+			/>
+		</svelte:fragment>
+	</ZPattern>
+
+	<ZPattern isOdd>
+		<svelte:fragment slot="header">
+			<span class="highlight font-bold">Flexible</span> Configuration
+		</svelte:fragment>
+		<svelte:fragment slot="body">
+			The flexible restriction module can allow admins to limit the usability of
+			a command to a certain role, channel or even a certain member. This
+			ensures that cardinal is setup just the way you want in your server.
+		</svelte:fragment>
+		<svelte:fragment slot="preview">
+			<img
+				src="/images/preview/cardinal-config.png"
+				width="1000"
+				height="1000"
+				alt=""
+				class="md:ml-auto"
+			/>
+		</svelte:fragment>
+	</ZPattern>
+
+	<ZPattern>
+		<svelte:fragment slot="header">
+			Host <span class="highlight font-bold">Giveaways</span>
+		</svelte:fragment>
+		<svelte:fragment slot="body">
+			Organize exciting giveaways for your community with Cardinal. Engage your
+			members and reward them for their participation. Customize giveaway
+			settings, choose winners fairly, and bring fun to your server events.
+		</svelte:fragment>
+		<svelte:fragment slot="preview">
+			<img
+				src="/images/preview/cardinal-giveaway.png"
+				width="1000"
+				height="1000"
 				alt=""
 				class="md:ml-auto"
 			/>
@@ -127,7 +172,7 @@
 
 <style lang="postcss">
 	.highlight {
-		@apply bg-gradient-to-br from-yellow-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone;
+		@apply bg-gradient-to-br from-cyan-500 via-cyan-400 to-yellow-300 bg-clip-text text-transparent box-decoration-clone;
 	}
 
 	.gradient-header {

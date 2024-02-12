@@ -4,6 +4,7 @@ import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
 	const commands = await apiFetch<FlattenedCommand[]>('/commands');
-	locals.commands = commands;
+	locals.commands =
+		locals.commands?.length ?? 0 === 0 ? commands : locals.commands;
 	return { commands };
 }) satisfies LayoutServerLoad;

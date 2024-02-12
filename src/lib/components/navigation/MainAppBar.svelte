@@ -69,6 +69,36 @@
 	</svelte:fragment>
 
 	<svelte:fragment slot="trail">
+		<!-- Legal -->
+		<div class="relative hidden sm:block">
+			<!-- trigger -->
+			<button
+				class="btn hover:variant-soft-primary"
+				use:popup={{ event: 'click', target: 'legal' }}
+			>
+				<span>Legal</span>
+				<i class="fa-solid fa-caret-down opacity-50" />
+			</button>
+			<!-- popup -->
+			<div class="card p-4 w-60 shadow-xl" data-popup="legal">
+				<nav class="list-nav">
+					<ul>
+						<li>
+							<a href={PathNames.Terms}>
+								<i class="fa-solid fa-globe"></i>
+								<span class="">Terms of Service</span>
+							</a>
+						</li>
+						<li>
+							<a href={PathNames.Privacy}>
+								<i class="fa-solid fa-globe"></i>
+								<span class="">Privacy Policy</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
 		<!-- Info -->
 		<div class="relative hidden sm:block">
 			<!-- trigger -->
@@ -135,6 +165,7 @@
 				</a>
 			{/if}
 		</div>
+
 		{#if user?.username}
 			<button
 				on:click={userMenuOpen}
