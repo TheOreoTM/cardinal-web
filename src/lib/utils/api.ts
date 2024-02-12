@@ -57,8 +57,8 @@ export const fetchBotGuilds = async (): Promise<APIGuild[]> => {
 
 	const response = await request?.json();
 
-	if (response.error) {
-		throw response.error;
+	if (response.message) {
+		throw response.message;
 	}
 
 	return response;
@@ -73,8 +73,8 @@ export const fetchUserGuilds = async (token: string): Promise<APIGuild[]> => {
 
 	const response = await request?.json();
 
-	if (response.error) {
-		throw response.error;
+	if (response.message) {
+		throw response.message;
 	}
 
 	return response;
@@ -92,8 +92,8 @@ export const requestDiscordToken = async (
 
 	const response = await request?.json();
 
-	if (response.error) {
-		throw response.error;
+	if (response.message) {
+		throw response.message;
 	}
 
 	// redirect user to front page with cookies set
