@@ -113,7 +113,7 @@
 		</svelte:fragment>
 		<svelte:fragment slot="body">
 			Cardinal offers all the standard moderation commands you expect, like
-			banning, muting, kicking and more. However, she also includes unique
+			banning, muting, kicking and more. However, it also includes unique
 			features such as being able to look at the actions a certain staff member
 			has taken on any member. For a full list of moderation commands, visit the
 			commands page.
