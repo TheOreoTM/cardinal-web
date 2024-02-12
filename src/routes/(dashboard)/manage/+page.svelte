@@ -2,6 +2,7 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 	import { getGuildAvatarUrl } from '$lib/utils/common';
+	import { BOT_INVITE_URL } from '$lib/constants';
 
 	export let data: PageData;
 	const { mutual, unmutual } = data.guilds;
@@ -9,17 +10,23 @@
 
 <div class="logo-cloud grid-cols-1 lg:!grid-cols-3 gap-1">
 	{#each mutual as guild}
-		<a href={`/manage/${guild.id}`} class="logo-item" data-sveltekit-preload-data="hover">
+		<a
+			href={`/manage/${guild.id}`}
+			class="logo-item"
+			data-sveltekit-preload-data="hover"
+		>
 			<span><Avatar src={getGuildAvatarUrl(guild.id, guild.icon)} /></span>
 			<span class="text-xs"
 				>{guild.name}
-				<p class="text-xs font-normal text-surface-400/80">Click to manage this server</p>
+				<p class="text-xs font-normal text-surface-400/80">
+					Click to manage this server
+				</p>
 			</span>
 		</a>
 	{/each}
 	{#each unmutual as guild}
 		<a
-			href={`/manage/${guild.id}`}
+			href={`${BOT_INVITE_URL}&guild_id=${guild.id}`}
 			class="logo-item opacity-50 hover:opacity-100 transition duration-200"
 			data-sveltekit-preload-data="off"
 		>
