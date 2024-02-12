@@ -153,7 +153,7 @@
 				{#if !guildData.premium}
 					<a href={PathNames.Premium}>
 						<span>
-							<GlowButton>Upgrade To Premium</GlowButton>
+							<GlowButton>Get Premium</GlowButton>
 						</span>
 					</a>
 				{:else}
@@ -197,7 +197,7 @@
 		<SettingsCard title="Bot Nickname">
 			<p>Change the nickname of the bot</p>
 			<Label id="bot-nickname" title="Nickname">
-				<div class="input-group input-group-divider grid-cols-[1fr_auto]">
+				<div class="input-group grid-cols-[1fr_auto]">
 					<input
 						type="text"
 						placeholder={defaults.nickname ?? 'Cardinal'}
@@ -207,14 +207,14 @@
 						max="32"
 						bind:value={values.nickname}
 					/>
-					<button
-						disabled={values.nickname === defaults.nickname}
-						on:click={updateNickname}
-						class="btn variant-filled-primary"
-					>
-						Set Nickname
-					</button>
 				</div>
+				<button
+					disabled={values.nickname === defaults.nickname}
+					on:click={updateNickname}
+					class="btn variant-filled-primary"
+				>
+					Set Nickname
+				</button>
 			</Label>
 		</SettingsCard>
 	</SettingsRow>
