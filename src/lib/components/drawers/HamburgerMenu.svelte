@@ -13,7 +13,7 @@
 				on:click={() => {
 					drawer.close();
 				}}
-				class="btn variant-ringed-surface"
+				class="btn variant-ghost-primary"
 			>
 				<i class="fa-solid fa-cog" />
 				<span class="ml-2">Dashboard</span>

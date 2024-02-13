@@ -189,15 +189,25 @@
 								defaults.prefix = values.prefix;
 							}
 						}}
-						class="btn variant-filled-primary">Update</button
+						class="btn variant-filled-primary !hidden sm:!block">Update</button
 					>
 				</div>
+				<button
+					disabled={values.prefix === defaults.prefix}
+					on:click={() => {
+						if (isValidPrefix(values.prefix)) {
+							handleSave({ prefix: values.prefix });
+							defaults.prefix = values.prefix;
+						}
+					}}
+					class="btn variant-filled-primary sm:!hidden">Update</button
+				>
 			</Label>
 		</SettingsCard>
 		<SettingsCard title="Bot Nickname">
 			<p>Change the nickname of the bot</p>
 			<Label id="bot-nickname" title="Nickname">
-				<div class="input-group grid-cols-[1fr_auto]">
+				<div class="input-group input-group-divider grid-cols-[1fr_auto]">
 					<input
 						type="text"
 						placeholder={defaults.nickname ?? 'Cardinal'}
@@ -207,11 +217,18 @@
 						max="32"
 						bind:value={values.nickname}
 					/>
+					<button
+						disabled={values.nickname === defaults.nickname}
+						on:click={updateNickname}
+						class="btn variant-filled-primary !hidden sm:!block"
+					>
+						Set Nickname
+					</button>
 				</div>
 				<button
 					disabled={values.nickname === defaults.nickname}
 					on:click={updateNickname}
-					class="btn variant-filled-primary"
+					class="btn variant-filled-primary sm:!hidden"
 				>
 					Set Nickname
 				</button>
