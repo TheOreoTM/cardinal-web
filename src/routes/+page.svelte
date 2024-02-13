@@ -170,6 +170,17 @@
 	</ZPattern>
 </div>
 
+<div class="text-center text-2xl">
+	<p>
+		Currently serving <span class="font-black highlight"
+			>{data.stats.memberAmount}</span
+		>
+		members in
+		<span class="font-black highlight">{data.stats.guildAmount}</span>
+		servers
+	</p>
+</div>
+
 <style lang="postcss">
 	.highlight {
 		@apply bg-gradient-to-br from-cyan-500 via-cyan-400 to-yellow-300 bg-clip-text text-transparent box-decoration-clone;
