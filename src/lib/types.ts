@@ -38,6 +38,8 @@ export interface GuildData {
 	isLocked: boolean;
 }
 
+export type GuildDataKey = keyof GuildData;
+
 export interface BaseAutomodData {
 	enabled: boolean;
 	actions: ModerationType[];

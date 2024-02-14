@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { PathNames } from '$lib/constants';
 
 	// Base Classes
@@ -43,6 +44,8 @@
 			href: PathNames.Invite
 		}
 	];
+
+	const version = $page.data.stats.version as string;
 </script>
 
 <div class="page-footer {cBase}">
@@ -55,7 +58,7 @@
 				<img src="/images/logo.png" width="64" alt="logo" />
 				<p class="!text-sm opacity-80">General Purpose Discord Bot.</p>
 				<!-- Current Version -->
-				<span class="badge variant-soft">0.0.0</span>
+				<span class="badge variant-soft">v{version ?? '0.0.0'}</span>
 			</div>
 			<div class="hidden md:grid grid-cols-3 gap-8">
 				<div class="space-y-6">

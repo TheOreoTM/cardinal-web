@@ -11,6 +11,10 @@ declare global {
 			user: APIUser | null;
 			guild: APIGuild | null;
 			commands: FlattenedCommand[];
+			guilds: {
+				mutual: APIGuild[];
+				unmutual: APIGuild[];
+			};
 		}
 
 		// interface Error {}

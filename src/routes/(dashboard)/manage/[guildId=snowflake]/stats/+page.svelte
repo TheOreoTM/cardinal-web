@@ -106,8 +106,9 @@
 			(higher = slower)
 		</p>
 		<Label id="stats-lookback" title="Lookback Amount">
-			<div class="input-group input-group-divider grid-cols-[1fr_auto]">
+			<div class="sm:input-group input-group-divider grid-cols-[1fr_auto]">
 				<input
+					class="input"
 					type="text"
 					placeholder="Amount..."
 					id="stats-lookback"
@@ -130,7 +131,7 @@
 							}
 						}
 					}}
-					class="btn variant-filled-primary">Update</button
+					class="btn variant-filled-primary w-full">Update</button
 				>
 			</div>
 		</Label>

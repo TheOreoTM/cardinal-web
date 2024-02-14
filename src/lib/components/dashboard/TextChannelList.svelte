@@ -11,10 +11,13 @@
 </script>
 
 <select bind:value={selected} class="select" {id} name={id} on:change>
-	<option class="flex items-baseline gap-2" value={undefined} selected>Select a channel…</option>
+	<option class="flex items-baseline gap-2" value={undefined} selected
+		>Select a channel…</option
+	>
 	{#each items as { label, value }}
 		{#if selected && selected === value}
-			<option class="flex items-baseline gap-2" {value} selected>{label}</option>
+			<option class="flex items-baseline gap-2" {value} selected>{label}</option
+			>
 		{:else}
 			<option class="flex items-baseline gap-2" {value}>{label}</option>
 		{/if}
