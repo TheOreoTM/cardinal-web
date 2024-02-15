@@ -34,7 +34,7 @@
 		arrow
 	} from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import MainAppBar from '$lib/components/navigation/MainAppBar.svelte';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -47,6 +47,8 @@
 	import GuildSideBar from '$components/navigation/GuildSideBar.svelte';
 	import HamburgerMenu from '$components/drawers/HamburgerMenu.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
+	import { loading } from '$lib/stores/loading';
+	import Loading from '$components/ui/Loading.svelte';
 
 	function matchPathWhitelist(pageUrlPath: string): boolean {
 		// If homepage route
@@ -66,6 +68,8 @@
 		: 'bg-surface-50-900-token lg:w-auto';
 	$: guild = $page.data.guild;
 	$: user = data.user;
+
+	$: $loading = !!$navigating;
 </script>
 
 <Drawer>
@@ -79,6 +83,7 @@
 </Drawer>
 <Modal />
 <Toast />
+<Loading />
 
 <AppShell {slotSidebarLeft} slotFooter="bg-black p-4">
 	<!-- Header -->
