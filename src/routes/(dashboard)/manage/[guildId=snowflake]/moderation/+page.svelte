@@ -22,9 +22,13 @@
 		toast.error('Failed to save settings');
 	}
 
-	function handleSave(setting: { [key: string]: any }) {
-		save(guild.id, 'moderation', setting, saveSuccessful, saveFailed);
+	async function handleSave(setting: { [key: string]: any }) {
+		loading = true;
+		await save(guild.id, 'moderation', setting, saveSuccessful, saveFailed);
+		loading = false;
 	}
+
+	let loading = false;
 
 	export let data: PageData;
 
@@ -63,6 +67,7 @@
 		</p>
 		<Label title="Admin role" id="role-admin">
 			<SelectOneRole
+				disabled={loading}
 				onSelected={() => handleSave({ roleAdmin: values.admin })}
 				roles={data.roles}
 				bind:selected={values.admin}
@@ -70,6 +75,7 @@
 		</Label>
 		<Label title="Moderator role" id="role-moderator">
 			<SelectOneRole
+				disabled={loading}
 				onSelected={() => handleSave({ roleModerator: values.moderator })}
 				roles={data.roles}
 				bind:selected={values.moderator}
@@ -77,6 +83,7 @@
 		</Label>
 		<Label title="Staff role" id="role-staff">
 			<SelectOneRole
+				disabled={loading}
 				onSelected={() => handleSave({ roleStaff: values.staff })}
 				roles={data.roles}
 				bind:selected={values.staff}
@@ -84,6 +91,7 @@
 		</Label>
 		<Label title="Trainee role" id="role-trainee">
 			<SelectOneRole
+				disabled={loading}
 				onSelected={() => handleSave({ roleTrainee: values.trainee })}
 				roles={data.roles}
 				bind:selected={values.trainee}
@@ -96,6 +104,7 @@
 
 			<Label title="Muted role" id="role-muted">
 				<SelectOneRole
+					disabled={loading}
 					onSelected={() => handleSave({ roleMuted: values.trainee })}
 					roles={data.roles}
 					bind:selected={values.muted}
@@ -111,6 +120,7 @@
 			<Label title="Link" id="appeal-link">
 				<div class="sm:input-group input-group-divider grid-cols-[1fr_auto]">
 					<input
+						disabled={loading}
 						class="input"
 						type="text"
 						placeholder="Amount..."

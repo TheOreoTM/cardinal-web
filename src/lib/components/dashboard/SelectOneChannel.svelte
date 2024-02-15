@@ -3,6 +3,7 @@
 	import type { APIGuildChannel } from 'discord-api-types/v10';
 
 	export let disabled = false;
+	export let placeholder = 'Select a channel...';
 	export let selected: string | null | undefined;
 	export let channels: APIGuildChannel<any>[];
 	export let id: string = `${Math.random()}`;
@@ -14,6 +15,7 @@
 	{disabled}
 	{id}
 	{onSelected}
+	{placeholder}
 	bind:selected
 	data={channels
 		.sort((a, b) => b.position - a.position)
