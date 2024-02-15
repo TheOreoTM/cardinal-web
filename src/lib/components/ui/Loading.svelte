@@ -4,7 +4,7 @@
 
 {#if $loading}
 	<div class="overlay"></div>
-	<img src="/images/cardinal.png" alt="Logo" class="spinner" />
+	<img src="/images/logo.png" alt="Logo" class="spinner" />
 {/if}
 
 <style>
