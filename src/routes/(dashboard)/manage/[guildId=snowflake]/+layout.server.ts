@@ -16,5 +16,18 @@ export const load = (async ({ params, locals }) => {
 
 	const nickname = apiFetch(`/guilds/${guildId}/nickname`);
 
-	return { guild, data, streamed: { nickname } };
+	const channels = (await fetch(
+		`https://discord.com/api/guilds/${params.guildId}/channels`,
+		{
+			headers: {
+				Authorization: `Bot ${DISCORD_TOKEN}`
+			}
+		}
+	)
+		.catch(() => {
+			throw Error('Failed to fetch channels for the server');
+		})
+		.then(async (res) => await res.json())) as APIGuildChannel<any>[];
+
+	return { guild, data, channels, streamed: { nickname } };
 }) satisfies LayoutServerLoad;

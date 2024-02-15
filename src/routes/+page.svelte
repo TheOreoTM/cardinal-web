@@ -14,6 +14,8 @@
 		'AFK handling',
 		'Automod',
 		'Moderation',
+		'Suggestions',
+		'Stats Tracking',
 		'Server Management'
 	];
 
@@ -170,7 +172,7 @@
 	</ZPattern>
 </div>
 
-<div class="text-center text-2xl">
+<div class="text-center text-2xl space-y-8">
 	<p>
 		Currently serving <span class="font-black highlight"
 			>{data.stats.memberAmount}</span
@@ -179,6 +181,9 @@
 		<span class="font-black highlight">{data.stats.guildAmount}</span>
 		servers
 	</p>
+	<GlowButton href={PathNames.Invite} size="btn-xl"
+		>Invite Cardinal To Yours</GlowButton
+	>
 </div>
 
 <style lang="postcss">

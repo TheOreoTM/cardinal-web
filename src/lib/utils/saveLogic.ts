@@ -22,7 +22,7 @@ export async function saveData<T>(
 	}
 }
 
-export function save(
+export async function save(
 	guildId: string,
 	module: DashboardSetting,
 	setting: { [key: string]: any },
@@ -31,8 +31,8 @@ export function save(
 ) {
 	const settingKey = Object.keys(setting)[0];
 	const value = setting[settingKey];
-	saveData(guildId, module, settingKey, value)
-		.then((r) => {
+	await saveData(guildId, module, settingKey, value)
+		.then(() => {
 			saveSuccessful();
 		})
 		.catch(() => {

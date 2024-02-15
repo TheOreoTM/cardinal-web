@@ -47,7 +47,6 @@
 
 <Meta
 	title="Moderation Settings"
-	blockRobots
 	logo={getGuildAvatarUrl(data.guild.id, data.guild.icon)}
 	guildName={data.guild.name}
 />

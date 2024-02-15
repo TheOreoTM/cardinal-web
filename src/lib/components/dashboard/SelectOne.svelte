@@ -9,6 +9,7 @@
 	export let data: { label: string; id: string }[];
 	export let onSelected: () => void;
 	export let id: string;
+	export let disabled = false;
 
 	/** This is round about way to fix the issue of it showing the value and not showing the label for the user*/
 
@@ -45,12 +46,13 @@
 </script>
 
 <input
-	class="input autocomplete"
+	class="input autocomplete hover:cursor-pointer"
 	type="search"
 	name={`autocomplete-search-${id}`}
+	{disabled}
 	{id}
-	bind:value={selectedOptionName}
 	{placeholder}
+	bind:value={selectedOptionName}
 	use:popup={popupSettings}
 />
 <div

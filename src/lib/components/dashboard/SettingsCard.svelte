@@ -1,8 +1,14 @@
 <script lang="ts">
-	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
+	import {
+		popup,
+		type CssClasses,
+		type PopupSettings
+	} from '@skeletonlabs/skeleton';
 
 	export let title: string;
 	export let documentation: string | null = null;
+	export let badgeText: string | null = null;
+	export let badgeColor: CssClasses = 'variant-filled-primary';
 
 	const popupHover: PopupSettings = {
 		event: 'hover',
@@ -14,7 +20,14 @@
 <div class="card flex flex-col shadow-md w-full justify-between">
 	<div>
 		<header class="card-header flex items-center gap-2 text-2xl mb-2">
-			{title}
+			<div class="flex flex-row space-x-2">
+				<span>{title}</span>
+				{#if badgeText}
+					<span class={`badge text-xs rounded-full ${badgeColor}`}
+						>{badgeText}</span
+					>
+				{/if}
+			</div>
 			{#if documentation}
 				<button
 					type="button"

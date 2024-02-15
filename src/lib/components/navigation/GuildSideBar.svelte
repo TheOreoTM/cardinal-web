@@ -68,16 +68,16 @@
 		<span>Stats</span>
 	</AppRailAnchor>
 	<AppRailAnchor
-		href={pathName('logging')}
-		selected={currentPath === pathName('logging')}
-		name="logging"
+		href={pathName('suggestion')}
+		selected={currentPath === pathName('suggestion')}
+		name="suggestion"
 		value={2}
-		title="Logging"
+		title="Suggestion"
 	>
 		<svelte:fragment slot="lead"
-			><i class="fa-regular fa-clipboard text-2xl" /></svelte:fragment
+			><i class="fa-regular fa-lightbulb text-2xl"></i></svelte:fragment
 		>
-		<span>Logging</span>
+		<span>Suggestion</span>
 	</AppRailAnchor>
 	<!-- --- -->
 	<svelte:fragment slot="trail"></svelte:fragment>
