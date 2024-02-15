@@ -1,5 +1,5 @@
 import { apiFetch, fetchGuild } from '$lib/utils/api';
-import type { APIGuildChannel } from 'discord-api-types/v10';
+import type { APIGuildChannel, APIRole } from 'discord-api-types/v10';
 import type { LayoutServerLoad } from './$types';
 import { DISCORD_TOKEN } from '$env/static/private';
 import type { GuildData } from '$lib/types';
@@ -29,5 +29,18 @@ export const load = (async ({ params, locals }) => {
 		})
 		.then(async (res) => await res.json())) as APIGuildChannel<any>[];
 
-	return { guild, data, channels, streamed: { nickname } };
+	const roles = (await fetch(
+		`https://discord.com/api/guilds/${params.guildId}/roles`,
+		{
+			headers: {
+				Authorization: `Bot ${DISCORD_TOKEN}`
+			}
+		}
+	)
+		.catch(() => {
+			throw Error('Failed to fetch roles for the server');
+		})
+		.then(async (res) => await res.json())) as APIRole[];
+
+	return { guild, data, channels, roles, streamed: { nickname } };
 }) satisfies LayoutServerLoad;
