@@ -49,6 +49,7 @@
 	import Footer from '$components/navigation/Footer.svelte';
 	import { loading } from '$lib/stores/loading';
 	import Loading from '$components/ui/Loading.svelte';
+	import UnsavedChanges from '$components/ui/UnsavedChanges.svelte';
 
 	function matchPathWhitelist(pageUrlPath: string): boolean {
 		// If homepage route
@@ -81,6 +82,7 @@
 		</div>
 	{/if}
 </Drawer>
+<UnsavedChanges />
 <Modal />
 <Toast />
 <Loading />

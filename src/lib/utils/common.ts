@@ -24,3 +24,7 @@ export function debounce<F extends (...args: any[]) => any>(
 		timeoutId = setTimeout(() => func(...args), delay);
 	};
 }
+
+export function getRandomItem<T>(arr: T[]) {
+	return arr[Math.floor(Math.random() * arr.length)] as T;
+}
