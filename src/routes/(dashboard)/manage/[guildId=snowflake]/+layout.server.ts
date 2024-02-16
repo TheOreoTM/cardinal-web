@@ -3,8 +3,10 @@ import type { APIGuildChannel, APIRole } from 'discord-api-types/v10';
 import type { LayoutServerLoad } from './$types';
 import { DISCORD_TOKEN } from '$env/static/private';
 import type { GuildData } from '$lib/types';
+import { browser } from '$app/environment';
+import { redirect } from '@sveltejs/kit';
 
-export const load = (async ({ params, locals }) => {
+export const load = (async ({ params, locals, url }) => {
 	// get guild data from cardinal
 
 	const guildId = params.guildId;
@@ -12,31 +14,29 @@ export const load = (async ({ params, locals }) => {
 
 	const data = await apiFetch<GuildData>(`/guilds/${guildId}/settings`);
 
+	if (!data.setup && !url.pathname.endsWith('/setup')) {
+		throw redirect(302, `/manage/${guildId}/setup`);
+	}
+
 	locals.guild = guild;
 
 	const nickname = apiFetch(`/guilds/${guildId}/nickname`);
 
-	const channels = (await fetch(
-		`https://discord.com/api/guilds/${params.guildId}/channels`,
-		{
-			headers: {
-				Authorization: `Bot ${DISCORD_TOKEN}`
-			}
+	const channels = (await fetch(`https://discord.com/api/guilds/${params.guildId}/channels`, {
+		headers: {
+			Authorization: `Bot ${DISCORD_TOKEN}`
 		}
-	)
+	})
 		.catch(() => {
 			throw Error('Failed to fetch channels for the server');
 		})
 		.then(async (res) => await res.json())) as APIGuildChannel<any>[];
 
-	const roles = (await fetch(
-		`https://discord.com/api/guilds/${params.guildId}/roles`,
-		{
-			headers: {
-				Authorization: `Bot ${DISCORD_TOKEN}`
-			}
+	const roles = (await fetch(`https://discord.com/api/guilds/${params.guildId}/roles`, {
+		headers: {
+			Authorization: `Bot ${DISCORD_TOKEN}`
 		}
-	)
+	})
 		.catch(() => {
 			throw Error('Failed to fetch roles for the server');
 		})

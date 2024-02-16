@@ -56,6 +56,8 @@
 		if (pageUrlPath === '/') return true;
 		// If legal page
 		if (['/privacy', '/terms', '/manage'].includes(pageUrlPath)) return true;
+		// If initial guild setup page
+		if (pageUrlPath.endsWith(`/setup`)) return true
 
 		return false;
 	}

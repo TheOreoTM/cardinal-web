@@ -36,6 +36,8 @@ export interface GuildData {
 	lockdownChannelList: string[];
 	lockdownChannelListType: 'whitelist' | 'blacklist';
 	isLocked: boolean;
+
+	setup: boolean;
 }
 
 export type GuildDataKey = keyof GuildData;

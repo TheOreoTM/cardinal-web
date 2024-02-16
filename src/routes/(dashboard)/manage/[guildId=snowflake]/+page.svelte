@@ -11,6 +11,7 @@
 	import { PathNames } from '$lib/constants';
 	import GlowButton from '$components/ui/GlowButton.svelte';
 	import { getGuildAvatarUrl } from '$lib/utils/common';
+	import { goto } from '$app/navigation';
 
 	const toast = getExtendedToastStore();
 
@@ -129,6 +130,7 @@
 />
 
 <div class="space-y-6">
+	{guildData.setup}
 	<Heading title="Server Info" />
 	<SettingsCard title="Information">
 		<div>
@@ -158,9 +160,7 @@
 					</a>
 				{:else}
 					<p>
-						<button disabled class="btn btn-sm variant-filled-success">
-							Premium is active
-						</button>
+						<button disabled class="btn btn-sm variant-filled-success"> Premium is active </button>
 					</p>
 				{/if}
 			</p>
