@@ -2,28 +2,51 @@
 	import Meta from '$components/Meta.svelte';
 	import Heading from '$components/ui/Heading.svelte';
 	import { getGuildAvatarUrl } from '$lib/utils/common';
-	import { SlideToggle, Step, Stepper } from '@skeletonlabs/skeleton';
+	import { Step, Stepper } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 	import { getExtendedToastStore } from '$lib/utils/toast';
 	import SelectOneRole from '$components/dashboard/SelectOneRole.svelte';
-	import Label from '$components/forms/Label.svelte';
+	import { save } from '$lib/utils/saveLogic';
+	import { loading } from '$lib/stores/loading';
+	import { confetti } from '$lib/stores/confetti';
+	import { goto } from '$app/navigation';
+	import ConfettiRain from '$components/ui/ConfettiRain.svelte';
+	import { redirect } from '@sveltejs/kit';
+	import { browser } from '$app/environment';
 
 	export let data: PageData;
 
-	let locked = true;
+	async function onCompleteHandler() {
+		const settings = Object.keys(values) as (keyof typeof values)[];
 
-	function onNextHandler(e: CustomEvent): void {
-		console.log('event:next', e.detail);
+		$loading = true;
+		for (const setting of settings) {
+			const value = values[setting];
+			await handleSave(setting, value);
+		}
+		$loading = false;
+
+		if (browser) {
+			window.location.href = `/manage/${data.guild.id}?message=${encodeURIComponent('This server has been setup successfully')}`;
+		}
 	}
-	function onBackHandler(e: CustomEvent): void {
-		console.log('event:prev', e.detail);
+
+	function saveSuccessful(setting: string, value: string) {
+		console.log(`Saved ${setting} with value ${value}`);
 	}
-	function onStepHandler(e: CustomEvent): void {
-		console.log('event:step', e.detail);
+
+	function saveFailed(setting: string) {
+		toast.error(`Failed to save setting ${setting}`);
 	}
-	function onCompleteHandler(e: CustomEvent): void {
-		console.log('event:complete', e.detail);
-		alert('Complete!');
+
+	async function handleSave(setting: string, value: any) {
+		await save(
+			data.guild.id,
+			'bot',
+			{ [setting]: value },
+			() => saveSuccessful(setting, value),
+			() => saveFailed(setting)
+		);
 	}
 
 	const toast = getExtendedToastStore();
@@ -52,14 +75,13 @@
 	}
 
 	let values = {
-		prefix: '>',
-		lookback: 7,
-		premium: false,
-		roleTrainee: '',
-		roleStaff: '',
-		roleModerator: '',
-		roleAdmin: '',
-		roleMuted: ''
+		prefix: data.data?.prefix ?? '>',
+		lookback: data.data?.lookback ?? 7,
+		roleTrainee: data.data?.roleTrainee ?? '',
+		roleStaff: data.data?.roleStaff ?? '',
+		roleModerator: data.data?.roleModerator ?? '',
+		roleAdmin: data.data?.roleAdmin ?? '',
+		roleMuted: data.data?.roleMuted ?? ''
 	};
 </script>
 
@@ -69,16 +91,15 @@
 	guildName={data.guild.name}
 />
 
-<Heading title="Lets get you started" centered />
+<Heading title={`Lets get ${data.guild.name} up and running`} centered />
 
 <div class="w-full card p-4 text-token">
 	<Stepper
-		on:next={onNextHandler}
-		on:back={onBackHandler}
-		on:step={onStepHandler}
-		on:complete={onCompleteHandler}
+		on:complete={async () => {
+			onCompleteHandler();
+		}}
 	>
-		<Step>
+		<!-- <Step>
 			<svelte:fragment slot="header">Get Started!</svelte:fragment>
 			<p>
 				Lets help you setup the basic setting for <span class="font-bold">{data.guild.name}</span>
@@ -86,7 +107,7 @@
 			<svelte:fragment slot="navigation"
 				><button on:click={() => {}} class="btn variant-ghost">Skip</button></svelte:fragment
 			>
-		</Step>
+		</Step> -->
 		<Step>
 			<svelte:fragment slot="header">Prefix</svelte:fragment>
 			<p>What prefix should the bot respond to?</p>
@@ -100,37 +121,34 @@
 				min="1"
 				max="10"
 			/>
+			<svelte:fragment slot="navigation"
+				><button on:click={() => {}} class="btn variant-ghost">Skip</button></svelte:fragment
+			>
 		</Step>
 		<Step>
-			<svelte:fragment slot="header">Admin</svelte:fragment>
+			<svelte:fragment slot="header">Admin Role</svelte:fragment>
 			<p>What role should cardinal consider as the admin role?</p>
-			<!-- this makes the thing not show up -->
-			<SelectOneRole roles={data.roles} selected={values.roleAdmin} />
+			<SelectOneRole roles={data.roles} bind:selected={values.roleAdmin} />
 		</Step>
 		<Step>
-			<svelte:fragment slot="header">Long Form Content.</svelte:fragment>
-			<p>The steps will expand to fit content of any length.</p>
-			<p>
-				<!-- cspell:disable -->
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque vel expedita porro vero, saepe dicta repellendus
-				facilis ab accusamus unde, tempora ut nobis eum. Veniam, architecto corrupti. Lorem ipsum dolor sit amet
-				consectetur adipisicing elit. Itaque vel expedita porro vero, saepe dicta repellendus facilis ab accusamus
-				unde, tempora ut nobis eum. Veniam, architecto corrupti. Lorem ipsum dolor sit amet consectetur adipisicing
-				elit. Itaque vel expedita porro vero, saepe dicta repellendus facilis ab accusamus unde, tempora ut nobis
-				eum. Veniam, architecto corrupti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque vel expedita
-				porro vero, saepe dicta repellendus facilis ab accusamus unde, tempora ut nobis eum. Veniam, architecto
-				corrupti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque vel expedita porro vero, saepe
-				dicta repellendus facilis ab accusamus unde, tempora ut nobis eum. Veniam, architecto corrupti.
-				<!-- cspell:enable -->
-			</p>
+			<svelte:fragment slot="header">Moderator Role</svelte:fragment>
+			<p>What role should cardinal consider as the moderator role?</p>
+			<SelectOneRole roles={data.roles} bind:selected={values.roleModerator} />
 		</Step>
 		<Step>
-			<svelte:fragment slot="header">Almost Done.</svelte:fragment>
-			<p>
-				A Complete button will appear on the last step. When the step is unlocked and the button pressed, an <code
-					class="code">on:complete</code
-				> event will be fired. You can use this trigger to submit form data to a server.
-			</p>
+			<svelte:fragment slot="header">Staff Role</svelte:fragment>
+			<p>What role should cardinal consider as the staff role?</p>
+			<SelectOneRole roles={data.roles} bind:selected={values.roleStaff} />
+		</Step>
+		<Step>
+			<svelte:fragment slot="header">Trainee Role</svelte:fragment>
+			<p>What role should cardinal consider as the trainee role?</p>
+			<SelectOneRole roles={data.roles} bind:selected={values.roleTrainee} />
+		</Step>
+		<Step>
+			<svelte:fragment slot="header">Muted Role</svelte:fragment>
+			<p>What role should cardinal assign muted members?</p>
+			<SelectOneRole roles={data.roles} bind:selected={values.roleMuted} />
 		</Step>
 	</Stepper>
 </div>

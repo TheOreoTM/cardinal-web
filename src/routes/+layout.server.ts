@@ -1,7 +1,7 @@
 import { apiFetch } from '$lib/utils/api';
 import type { LayoutServerLoad } from './$types';
 
-export const load = (async ({ locals }) => {
+export const load = (async ({ locals, url }) => {
 	const botStats = (await apiFetch('/stats').catch(() => null)) as {
 		guildAmount: number;
 		memberAmount: number;
@@ -10,7 +10,12 @@ export const load = (async ({ locals }) => {
 		version: string;
 	} | null;
 
+	const error = url.searchParams.get('error');
+	const message = url.searchParams.get('message');
+
 	return {
+		error: error === '' ? null : error,
+		message: message === '' ? null : message,
 		user: locals.user,
 		stats: botStats
 			? botStats

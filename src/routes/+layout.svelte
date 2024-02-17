@@ -25,14 +25,7 @@
 	storeHighlightJs.set(hljs);
 
 	// Floating UI for Popups
-	import {
-		computePosition,
-		autoUpdate,
-		flip,
-		shift,
-		offset,
-		arrow
-	} from '@floating-ui/dom';
+	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	import { navigating, page } from '$app/stores';
 	import MainAppBar from '$lib/components/navigation/MainAppBar.svelte';
@@ -50,6 +43,10 @@
 	import { loading } from '$lib/stores/loading';
 	import Loading from '$components/ui/Loading.svelte';
 	import UnsavedChanges from '$components/ui/UnsavedChanges.svelte';
+	import { onMount } from 'svelte';
+	import { getExtendedToastStore } from '$lib/utils/toast';
+	import ConfettiRain from '$components/ui/ConfettiRain.svelte';
+	import { confetti } from '$lib/stores/confetti';
 
 	function matchPathWhitelist(pageUrlPath: string): boolean {
 		// If homepage route
@@ -57,7 +54,7 @@
 		// If legal page
 		if (['/privacy', '/terms', '/manage'].includes(pageUrlPath)) return true;
 		// If initial guild setup page
-		if (pageUrlPath.endsWith(`/setup`)) return true
+		if (pageUrlPath.endsWith(`/setup`)) return true;
 
 		return false;
 	}
@@ -65,10 +62,38 @@
 	export let data;
 
 	const drawerStore = getDrawerStore();
+	const toastStore = getExtendedToastStore();
 
-	$: slotSidebarLeft = matchPathWhitelist($page.url.pathname)
-		? 'w-0'
-		: 'bg-surface-50-900-token lg:w-auto';
+	onMount(() => {
+		if (data.error) {
+			toastStore.trigger({
+				message: 'Failed to log in. Please try again.',
+				hideDismiss: true,
+				timeout: 8000,
+				background: 'variant-filled-warning'
+			});
+			toastStore.trigger({
+				message: `Error: ${data.error}`,
+				hideDismiss: true,
+				timeout: 8000,
+				background: 'variant-filled-warning'
+			});
+		}
+
+		if (data.message) {
+			toastStore.trigger({
+				message: data.message,
+				timeout: 8000,
+				background: 'variant-filled-primary'
+			});
+
+			if (data.message == 'This server has been setup successfully') {
+				$confetti = true;
+			}
+		}
+	});
+
+	$: slotSidebarLeft = matchPathWhitelist($page.url.pathname) ? 'w-0' : 'bg-surface-50-900-token lg:w-auto';
 	$: guild = $page.data.guild;
 	$: user = data.user;
 
@@ -84,6 +109,7 @@
 		</div>
 	{/if}
 </Drawer>
+<ConfettiRain />
 <UnsavedChanges />
 <Modal />
 <Toast />

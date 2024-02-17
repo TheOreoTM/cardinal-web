@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { Autocomplete, popup } from '@skeletonlabs/skeleton';
-	import type {
-		AutocompleteOption,
-		PopupSettings
-	} from '@skeletonlabs/skeleton';
+	import type { AutocompleteOption, PopupSettings } from '@skeletonlabs/skeleton';
 
 	export let placeholder = 'Select value...';
 	export let data: { label: string; id: string }[];
@@ -16,9 +13,7 @@
 	// binded value - should only have ID
 	export let selected: string | null = null;
 	// non binded value - should only have names
-	let selectedOptionName: string = data.filter((i) =>
-		selected?.includes(i.id)
-	)[0].label;
+	let selectedOptionName: string = data.filter((i) => selected?.includes(i.id))[0]?.label ?? '';
 
 	const options: AutocompleteOption[] = data.map((item) => ({
 		label: item.label,
@@ -60,9 +55,5 @@
 	tabindex="-1"
 	data-popup={`popupAutocomplete-${id}`}
 >
-	<Autocomplete
-		bind:input={selectedOptionName}
-		{options}
-		on:selection={onSelectOption}
-	/>
+	<Autocomplete bind:input={selectedOptionName} {options} on:selection={onSelectOption} />
 </div>

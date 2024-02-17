@@ -8,16 +8,11 @@
 	export let id: string = `${Math.random()}`;
 	export let disabled = false;
 
+	const transformedRoles = roles
+		.sort((a, b) => b.position - a.position)
+		.map((r) => ({ id: r.id, label: r.name }));
+
 	export let onSelected: () => void = () => {};
 </script>
 
-<SelectOne
-	{disabled}
-	{id}
-	{onSelected}
-	{placeholder}
-	bind:selected
-	data={roles
-		.sort((a, b) => b.position - a.position)
-		.map((r) => ({ id: r.id, label: r.name }))}
-/>
+<SelectOne {disabled} {id} {onSelected} {placeholder} bind:selected data={transformedRoles} />

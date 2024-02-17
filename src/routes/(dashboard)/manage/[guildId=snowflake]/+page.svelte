@@ -130,7 +130,6 @@
 />
 
 <div class="space-y-6">
-	{guildData.setup}
 	<Heading title="Server Info" />
 	<SettingsCard title="Information">
 		<div>
