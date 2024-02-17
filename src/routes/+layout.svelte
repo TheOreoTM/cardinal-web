@@ -54,7 +54,9 @@
 		// If legal page
 		if (['/privacy', '/terms', '/manage'].includes(pageUrlPath)) return true;
 		// If initial guild setup page
-		if (pageUrlPath.endsWith(`/setup`)) return true;
+		if (pageUrlPath.includes(`/setup`)) return true;
+		// If appeal page
+		if (pageUrlPath.includes(`/appeals`)) return true;
 
 		return false;
 	}
@@ -87,7 +89,7 @@
 				background: 'variant-filled-primary'
 			});
 
-			if (data.message == 'This server has been setup successfully') {
+			if (data.message === 'This server has been setup successfully') {
 				$confetti = true;
 			}
 		}

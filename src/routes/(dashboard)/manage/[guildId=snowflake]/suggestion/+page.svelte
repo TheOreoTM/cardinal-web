@@ -45,8 +45,6 @@
 		...defaults
 	};
 
-	console.log(values);
-
 	// For new system for suggestion feedback
 	let action: string = values.createThread ? 'thread' : 'none';
 
@@ -62,16 +60,10 @@
 	guildName={data.guild.name}
 />
 
-<Heading
-	title="Suggestion"
-	description={`Manage the suggestion settings for ${data.guild.name}`}
-/>
+<Heading title="Suggestion" description={`Manage the suggestion settings for ${data.guild.name}`} />
 <div class="space-y-6">
 	<SettingsCard title="Suggestion Channel">
-		<p>
-			The channel where the bot should send the suggestion to send when a member
-			makes a suggestion.
-		</p>
+		<p>The channel where the bot should send the suggestion to send when a member makes a suggestion.</p>
 		<Label title="Channel" id="channel-suggestion">
 			<SelectOneChannel
 				selected={values.channel}
@@ -83,10 +75,7 @@
 	</SettingsCard>
 	<SettingsRow>
 		<SettingsCard title="Create Thread">
-			<p>
-				Should the bot create a thread under every suggestion so that members
-				can discuss in it.
-			</p>
+			<p>Should the bot create a thread under every suggestion so that members can discuss in it.</p>
 			<Label title="Create Thread" id="thread">
 				<SlideToggle
 					on:change={async () => {
@@ -110,9 +99,7 @@
 						{#each ['thread', 'vote', 'none'] as a}
 							<button
 								disabled
-								class="chip capitalize {action === a
-									? 'variant-filled-primary'
-									: 'variant-soft-primary'}"
+								class="chip capitalize {action === a ? 'variant-filled-primary' : 'variant-soft-primary'}"
 								on:click={() => {
 									selectChip(a);
 								}}

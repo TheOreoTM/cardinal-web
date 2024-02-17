@@ -9,6 +9,9 @@
 	import SelectOneRole from '$components/dashboard/SelectOneRole.svelte';
 	import { save } from '$lib/utils/saveLogic';
 	import SettingsRow from '$components/dashboard/SettingsRow.svelte';
+	import SelectOneChannel from '$components/dashboard/SelectOneChannel.svelte';
+	import SingleChipSelect from '$components/dashboard/SingleChipSelect.svelte';
+	import type { SelectOption } from '$lib/types';
 
 	const toast = getExtendedToastStore();
 
@@ -23,9 +26,14 @@
 	}
 
 	async function handleSave(setting: { [key: string]: any }) {
-		loading = true;
-		await save(guild.id, 'moderation', setting, saveSuccessful, saveFailed);
-		loading = false;
+		try {
+			loading = true;
+			await save(guild.id, 'moderation', setting, saveSuccessful, saveFailed);
+		} catch (error) {
+			saveFailed();
+		} finally {
+			loading = false;
+		}
 	}
 
 	let loading = false;
@@ -41,12 +49,20 @@
 		staff: guildData.roleStaff ?? '',
 		trainee: guildData.roleTrainee ?? '',
 		muted: guildData.roleMuted ?? '',
-		link: guildData.appealLink ?? ''
+		link: guildData.appealLink ?? '',
+		channelAppeal: guildData.channelAppeal ?? '',
+		appealType: guildData.appealType ?? 'disabled'
 	};
 
 	let values = {
 		...defaults
 	};
+
+	const appealOptions: SelectOption[] = [
+		{ label: 'Built-in', value: 'builtin' },
+		{ label: 'External', value: 'external' },
+		{ label: 'Disabled', value: 'disabled' }
+	];
 </script>
 
 <Meta
@@ -55,15 +71,12 @@
 	guildName={data.guild.name}
 />
 
-<Heading
-	title="Moderation"
-	description={`Manage the moderation settings for ${data.guild.name}`}
-/>
+<Heading title="Moderation" description={`Manage the moderation settings for ${data.guild.name}`} />
 <div class="space-y-6">
 	<SettingsCard title="Moderator Roles">
 		<p>
-			As of now, cardinal gives you the the option to setup roles for each staff
-			position. This may or not may not be changed soon.
+			As of now, cardinal gives you the the option to setup roles for each staff position. This may or not may
+			not be changed soon.
 		</p>
 		<Label title="Admin role" id="role-admin">
 			<SelectOneRole
@@ -111,34 +124,69 @@
 				/>
 			</Label>
 		</SettingsCard>
-		<SettingsCard title="Appeal Link">
-			<p>
-				The link to send members when they get muted/banned. Inbuilt appeals may
-				be coming to cardinal in the future
-			</p>
+	</SettingsRow>
 
-			<Label title="Link" id="appeal-link">
-				<div class="sm:input-group input-group-divider grid-cols-[1fr_auto]">
-					<input
-						disabled={loading}
-						class="input"
-						type="text"
-						placeholder="Amount..."
-						id="stats-lookback"
-						bind:value={values.link}
-						min="1"
-						max="30"
-					/>
-					<button
-						disabled={values.link === defaults.link}
-						on:click={() => {
-							handleSave({ appealLink: values.link });
-							defaults.link = values.link;
-						}}
-						class="btn variant-filled-primary w-full">Update</button
-					>
-				</div>
-			</Label>
+	<Heading title="Appeals" description="Settings relevent to appeals in cardinal bot" />
+	<SettingsRow>
+		<SettingsCard title="Appeal Type">
+			<p>The type of appeals cardinal should use</p>
+
+			<footer>
+				<SingleChipSelect
+					disabled={loading}
+					onSelect={() => handleSave({ appealType: values.appealType })}
+					bind:selected={values.appealType}
+					options={appealOptions}
+				/>
+			</footer>
 		</SettingsCard>
+		<!-- Inbuilt Appeals -->
+		<div hidden={values.appealType !== 'builtin'}>
+			<SettingsCard title="Appeal Channel">
+				<p>The channel user appeals will be sent to</p>
+
+				<Label title="Channel" id="appeal-channel">
+					<SelectOneChannel
+						disabled={loading}
+						channels={data.channels}
+						bind:selected={values.channelAppeal}
+						onSelected={() => handleSave({ appealChannel: values.channelAppeal })}
+					/>
+				</Label>
+			</SettingsCard>
+		</div>
+
+		<!-- External Appeals -->
+		<div hidden={values.appealType !== 'external'}>
+			<SettingsCard title="Appeal Link">
+				<p>
+					The link to send members when they get muted/banned. Inbuilt appeals may be coming to cardinal in
+					the future
+				</p>
+
+				<Label title="Link" id="appeal-link">
+					<div class="sm:input-group input-group-divider grid-cols-[1fr_auto]">
+						<input
+							disabled={loading}
+							class="input"
+							type="text"
+							placeholder="https://..."
+							id="stats-lookback"
+							bind:value={values.link}
+							min="1"
+							max="30"
+						/>
+						<button
+							disabled={values.link === defaults.link}
+							on:click={() => {
+								handleSave({ appealLink: values.link });
+								defaults.link = values.link;
+							}}
+							class="btn variant-filled-primary w-full">Update</button
+						>
+					</div>
+				</Label>
+			</SettingsCard>
+		</div>
 	</SettingsRow>
 </div>

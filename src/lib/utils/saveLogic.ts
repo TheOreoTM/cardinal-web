@@ -1,11 +1,6 @@
 import type { DashboardSetting } from '$lib/types';
 
-export async function saveData<T>(
-	guildId: string,
-	module: DashboardSetting,
-	setting: string,
-	value: any
-) {
+export async function saveData<T>(guildId: string, module: DashboardSetting, setting: string, value: any) {
 	const body = { module, setting, value, guildId };
 
 	const response = await fetch(`/api/saveData`, {
@@ -31,11 +26,11 @@ export async function save(
 ) {
 	const settingKey = Object.keys(setting)[0];
 	const value = setting[settingKey];
-	await saveData(guildId, module, settingKey, value)
-		.then(() => {
-			saveSuccessful();
-		})
-		.catch(() => {
-			saveFailed();
-		});
+	try {
+		await saveData(guildId, module, settingKey, value);
+		saveSuccessful();
+	} catch (error) {
+		console.error(error);
+		saveFailed();
+	}
 }

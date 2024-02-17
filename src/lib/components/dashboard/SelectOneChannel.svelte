@@ -17,7 +17,5 @@
 	{onSelected}
 	{placeholder}
 	bind:selected
-	data={channels
-		.sort((a, b) => b.position - a.position)
-		.map((r) => ({ id: r.id, label: r.name }))}
+	data={channels.sort((a, b) => b.position - a.position).map((r) => ({ value: r.id, label: r.name }))}
 />

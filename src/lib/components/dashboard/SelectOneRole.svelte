@@ -10,7 +10,7 @@
 
 	const transformedRoles = roles
 		.sort((a, b) => b.position - a.position)
-		.map((r) => ({ id: r.id, label: r.name }));
+		.map((r) => ({ value: r.id, label: r.name }));
 
 	export let onSelected: () => void = () => {};
 </script>

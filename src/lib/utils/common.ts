@@ -1,14 +1,12 @@
 export function getGuildAvatarUrl(id: string, icon: string | null): string {
 	const url = `https://cdn.discordapp.com/icons/${id}/${icon}.png`;
-	if (icon == null)
-		return 'https://media.pocketgamer.biz/2021/5/110514/discord-new-logo-2021-r225x.jpg';
+	if (icon == null) return 'https://media.pocketgamer.biz/2021/5/110514/discord-new-logo-2021-r225x.jpg';
 	return url;
 }
 
 export function getUserAvatarUrl(id: string, icon: string | null): string {
 	const url = `https://cdn.discordapp.com/avatars/${id}/${icon}.png`;
-	if (icon == null)
-		return 'https://media.pocketgamer.biz/2021/5/110514/discord-new-logo-2021-r225x.jpg';
+	if (icon == null) return 'https://media.pocketgamer.biz/2021/5/110514/discord-new-logo-2021-r225x.jpg';
 	return url;
 }
 
@@ -26,5 +24,5 @@ export function debounce<F extends (...args: any[]) => any>(
 }
 
 export function getRandomItem<T>(arr: T[]) {
-	return arr[Math.floor(Math.random() * arr.length)] as T;
+	return arr[Math.floor(Math.random() * arr.length - 1)] as T;
 }

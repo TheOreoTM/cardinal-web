@@ -1,5 +1,7 @@
 export type DashboardSetting = 'stats' | 'moderation' | 'logging' | 'bot';
 
+export type SelectOption = { value: string; label: string };
+
 export interface GuildData {
 	guildId: string;
 	roleTrainee?: string | null;
@@ -26,10 +28,12 @@ export interface GuildData {
 
 	channelModlog?: string | null;
 	channelSuggestion?: string | null;
+	channelAppeal?: string | null;
 
 	suggestionCreateThread?: boolean | null;
 
 	appealLink?: string | null;
+	appealType: 'disabled' | 'builtin' | 'external';
 
 	useCachedStats: boolean;
 
@@ -174,3 +178,17 @@ export const enum PermissionLevels {
 	ServerOwner = 7,
 	BotOwner = 10
 }
+
+export type Appeal = {
+	id: string;
+	userId: string;
+	muteOrBan: string;
+	reason: string;
+	appeal: string;
+	extra: string;
+	staffId: string;
+	staffUsername: string;
+	status: string;
+	updatedAt: Date;
+	createdAt: Date;
+};

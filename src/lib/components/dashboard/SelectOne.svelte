@@ -1,9 +1,10 @@
 <script lang="ts">
+	import type { SelectOption } from '$lib/types';
 	import { Autocomplete, popup } from '@skeletonlabs/skeleton';
 	import type { AutocompleteOption, PopupSettings } from '@skeletonlabs/skeleton';
 
 	export let placeholder = 'Select value...';
-	export let data: { label: string; id: string }[];
+	export let data: SelectOption[];
 	export let onSelected: () => void;
 	export let id: string;
 	export let disabled = false;
@@ -13,12 +14,12 @@
 	// binded value - should only have ID
 	export let selected: string | null = null;
 	// non binded value - should only have names
-	let selectedOptionName: string = data.filter((i) => selected?.includes(i.id))[0]?.label ?? '';
+	let selectedOptionName: string = data.filter((i) => selected?.includes(i.value))[0]?.label ?? '';
 
 	const options: AutocompleteOption[] = data.map((item) => ({
 		label: item.label,
 		value: item.label,
-		meta: { id: item.id }
+		meta: { id: item.value }
 	}));
 
 	// function isValidInput(value: string): boolean {

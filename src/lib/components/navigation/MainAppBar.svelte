@@ -15,8 +15,7 @@
 		drawerStore.open({
 			id: 'hamburger-menu',
 			bgDrawer: 'bg-surface-900 text-white',
-			bgBackdrop:
-				'bg-gradient-to-tr from-primary-500/30 via-primary-500/20 to-primary-500/10',
+			bgBackdrop: 'bg-gradient-to-tr from-primary-500/30 via-primary-500/20 to-primary-500/10',
 			width: 'w-[280px] md:w-[480px]',
 			height: 'h-min',
 			padding: 'p-4',
@@ -35,7 +34,6 @@
 			buttonTextConfirm: 'Logout',
 
 			response(r) {
-				console.log(r);
 				if (r) {
 					window.location.href = PathNames.Logout;
 				}
@@ -50,19 +48,12 @@
 	<svelte:fragment slot="lead">
 		<div class="flex items-center space-x-4">
 			<!-- Hamburger Menu -->
-			<button
-				on:click={hamburgerMenuOpen}
-				class="btn-icon btn-icon-sm sm:hidden"
-			>
+			<button on:click={hamburgerMenuOpen} class="btn-icon btn-icon-sm sm:hidden">
 				<i class="fa-solid fa-bars text-xl" />
 			</button>
 			<!-- Logo -->
 			<a class="lg:!ml-0 w-[32px] lg:w-auto" href="/" title="Go to Homepage">
-				<Avatar
-					src="/images/logo.png"
-					width="lg:w-12 w-10"
-					alt="cardinal logo"
-				/>
+				<Avatar src="/images/logo.png" width="lg:w-12 w-10" alt="cardinal logo" />
 			</a>
 			<p class="lg:!block hidden font-bold uppercase">Cardinal Bot</p>
 		</div>
@@ -72,10 +63,7 @@
 		<!-- Legal -->
 		<div class="relative hidden sm:block">
 			<!-- trigger -->
-			<button
-				class="btn hover:variant-soft-primary"
-				use:popup={{ event: 'click', target: 'legal' }}
-			>
+			<button class="btn hover:variant-soft-primary" use:popup={{ event: 'click', target: 'legal' }}>
 				<span>Legal</span>
 				<i class="fa-solid fa-caret-down opacity-50" />
 			</button>
@@ -102,10 +90,7 @@
 		<!-- Info -->
 		<div class="relative hidden sm:block">
 			<!-- trigger -->
-			<button
-				class="btn hover:variant-soft-primary"
-				use:popup={{ event: 'click', target: 'info' }}
-			>
+			<button class="btn hover:variant-soft-primary" use:popup={{ event: 'click', target: 'info' }}>
 				<span>Info</span>
 				<i class="fa-solid fa-caret-down opacity-50" />
 			</button>
@@ -132,10 +117,7 @@
 		<!-- Links -->
 		<div class="relative hidden sm:block">
 			<!-- trigger -->
-			<button
-				class="btn hover:variant-soft-primary"
-				use:popup={{ event: 'click', target: 'links' }}
-			>
+			<button class="btn hover:variant-soft-primary" use:popup={{ event: 'click', target: 'links' }}>
 				<span>Links</span>
 				<i class="fa-solid fa-caret-down opacity-50" />
 			</button>
@@ -171,21 +153,11 @@
 				on:click={userMenuOpen}
 				class="btn variant-glass-primary space-x-2 rounded-md flex items-center px-2"
 			>
-				<Avatar
-					width="w-6"
-					initials={user.username[0]}
-					src={getUserAvatarUrl(user.id, user.avatar)}
-				/>
-				<span class="badge rounded-md variant-filled-primary"
-					>@{user.username}</span
-				>
+				<Avatar width="w-6" initials={user.username[0]} src={getUserAvatarUrl(user.id, user.avatar)} />
+				<span class="badge rounded-md variant-filled-primary">@{user.username}</span>
 			</button>
 		{:else}
-			<a
-				href={PathNames.Login}
-				rel="noopener noreferrer"
-				class="btn variant-filled-primary"
-			>
+			<a href={PathNames.Login} rel="noopener noreferrer" class="btn variant-filled-primary">
 				<i class="fa-solid fa-right-to-bracket"></i>
 				<span class="ml-2">Login</span>
 			</a>
