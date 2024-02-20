@@ -118,7 +118,7 @@
 			<Label title="Muted role" id="role-muted">
 				<SelectOneRole
 					disabled={loading}
-					onSelected={() => handleSave({ roleMuted: values.trainee })}
+					onSelected={() => handleSave({ roleMuted: values.muted })}
 					roles={data.roles}
 					bind:selected={values.muted}
 				/>
