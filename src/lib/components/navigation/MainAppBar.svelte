@@ -149,13 +149,36 @@
 		</div>
 
 		{#if user?.username}
-			<button
-				on:click={userMenuOpen}
-				class="btn variant-glass-primary space-x-2 rounded-md flex items-center px-2"
-			>
-				<Avatar width="w-6" initials={user.username[0]} src={getUserAvatarUrl(user.id, user.avatar)} />
-				<span class="badge rounded-md variant-filled-primary">@{user.username}</span>
-			</button>
+			<!-- User Dropdown -->
+			<div class="relative">
+				<!-- trigger -->
+				<button
+					use:popup={{ event: 'click', target: 'user' }}
+					class="btn variant-glass-primary space-x-2 rounded-md flex items-center px-2"
+				>
+					<Avatar width="w-6" initials={user.username[0]} src={getUserAvatarUrl(user.id, user.avatar)} />
+					<span class="badge rounded-md variant-filled-primary">@{user.username}</span>
+				</button>
+				<!-- popup -->
+				<div class="card p-4 w-60 shadow-xl" data-popup="user">
+					<nav class="list-nav">
+						<ul>
+							<li>
+								<a href={PathNames.Appeals}>
+									<i class="fa-solid fa-note-sticky"></i>
+									<span class="">Appeals</span>
+								</a>
+							</li>
+							<li>
+								<a class="variant-ghost-error" href={PathNames.Logout}>
+									<i class="fa-solid fa-right-to-bracket"></i>
+									<span class="">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
 		{:else}
 			<a href={PathNames.Login} rel="noopener noreferrer" class="btn variant-filled-primary">
 				<i class="fa-solid fa-right-to-bracket"></i>

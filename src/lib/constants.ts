@@ -1,7 +1,4 @@
-import {
-	PUBLIC_BASE_WEB_URL,
-	PUBLIC_DISCORD_OAUTH_CLIENT_ID
-} from '$env/static/public';
+import { PUBLIC_BASE_WEB_URL, PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
 
 export const PathNames = {
 	Home: '/',
@@ -11,6 +8,7 @@ export const PathNames = {
 	Invite: '/invite',
 	Docs: '/docs',
 	Manage: '/manage',
+	Appeals: '/appeals',
 	Premium: '/premium',
 	Commands: '/commands',
 	Github: 'https://github.com/theoreotm/cardinal-bot',

@@ -181,7 +181,9 @@ export const enum PermissionLevels {
 
 export type Appeal = {
 	id: string;
+	idx: number;
 	userId: string;
+	guildId: string;
 	muteOrBan: string;
 	reason: string;
 	appeal: string;
@@ -191,4 +193,9 @@ export type Appeal = {
 	status: string;
 	updatedAt: Date;
 	createdAt: Date;
+} & AppealGuildData;
+
+type AppealGuildData = {
+	guildName: string;
+	guildIcon: string | null;
 };

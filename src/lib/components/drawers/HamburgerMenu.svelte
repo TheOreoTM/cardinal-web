@@ -55,6 +55,17 @@
 				<span class="ml-2">Add Bot</span>
 			</a>
 			<a
+				on:click={() => {
+					drawer.close();
+				}}
+				rel="noopener noreferrer"
+				class="btn variant-ringed-surface"
+				href={PathNames.Appeals}
+			>
+				<i class="fa-solid fa-note-sticky"></i>
+				<span class="">Appeals</span>
+			</a>
+			<a
 				href={PathNames.Logout}
 				rel="noopener noreferrer"
 				on:click={() => {
