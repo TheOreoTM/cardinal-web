@@ -56,7 +56,7 @@
 		// If initial guild setup page
 		if (pageUrlPath.includes(`/setup`)) return true;
 		// If appeal page
-		if (pageUrlPath.includes(`/appeals`)) return true;
+		if (pageUrlPath.includes(`/appeal`)) return true;
 
 		return false;
 	}
@@ -68,14 +68,14 @@
 
 	onMount(() => {
 		if (data.error) {
+			// toastStore.trigger({
+			// 	message: 'Failed to log in. Please try again.',
+			// 	hideDismiss: true,
+			// 	timeout: 8000,
+			// 	background: 'variant-filled-warning'
+			// });
 			toastStore.trigger({
-				message: 'Failed to log in. Please try again.',
-				hideDismiss: true,
-				timeout: 8000,
-				background: 'variant-filled-warning'
-			});
-			toastStore.trigger({
-				message: `Error: ${data.error}`,
+				message: `${data.error}`,
 				hideDismiss: true,
 				timeout: 8000,
 				background: 'variant-filled-warning'

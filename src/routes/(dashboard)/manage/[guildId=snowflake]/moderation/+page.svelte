@@ -150,7 +150,7 @@
 						disabled={loading}
 						channels={data.channels}
 						bind:selected={values.channelAppeal}
-						onSelected={() => handleSave({ appealChannel: values.channelAppeal })}
+						onSelected={() => handleSave({ channelAppeal: values.channelAppeal })}
 					/>
 				</Label>
 			</SettingsCard>
