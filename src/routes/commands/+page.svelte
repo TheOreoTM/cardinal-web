@@ -3,12 +3,7 @@
 	import type { FlattenedCommand } from '$lib/types';
 	import { marked } from 'marked';
 	import type { PageData } from './$types';
-	import {
-		Accordion,
-		AccordionItem,
-		Tab,
-		TabGroup
-	} from '@skeletonlabs/skeleton';
+	import { Accordion, AccordionItem, Tab, TabGroup } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
 	const commands = data.commands;
@@ -30,7 +25,7 @@
 		)
 	).map(([category, commands]) => ({ category, commands }));
 
-	let tabSet = 1;
+	let tabSet = 0;
 </script>
 
 <Meta title="Commands" />
@@ -42,11 +37,7 @@
 		</Tab>
 	{/each}
 	<svelte:fragment slot="panel">
-		<Accordion
-			class="card p-4 text-token"
-			spacing="space-y-2"
-			regionPanel="bg-surface-900 pb-5"
-		>
+		<Accordion class="card p-4 text-token" spacing="space-y-2" regionPanel="bg-surface-900 pb-5">
 			{#each filteredCommands[tabSet].commands as command}
 				<AccordionItem open={false}>
 					<svelte:fragment slot="summary">
