@@ -38,12 +38,12 @@
 					</li>
 					<li>Mutual servers that you may share with the bot.</li>
 				</ol>
-				<LegalSubsection title="Log Data">
+				<!-- <LegalSubsection title="Log Data">
 					<p>
 						In the event that an error occurs with the bot, log data will be collected which may include your
 						Discord information. This data is only stored for internal uses to troubleshoot issues.
 					</p>
-				</LegalSubsection>
+				</LegalSubsection> -->
 				<LegalSubsection title="User Message Content Tracking">
 					<p>
 						We want to make it clear that Cardinal Bot does not collect or store the content of individual
@@ -55,7 +55,7 @@
 			</LegalSection>
 
 			<LegalSection title="Information from use of cardinal.oreotm.xyz">
-				<LegalSubsection title="Log Data">
+				<!-- <LegalSubsection title="Log Data">
 					<p>
 						{"When you visit our website, our servers may automatically log the standard data provided by your web browser. It may include your device's Internet Protocol (IP) address, your browser type and version, the pages you visit, the time and date of your visit, the time spent on each page, other details about your visit, and technical details that occur in conjunction with any errors you may encounter."}
 					</p>
@@ -63,7 +63,7 @@
 						Please be aware that while this information may not be personally identifying by itself, it may be
 						possible to combine it with other data to personally identify individual persons.{' '}
 					</p>
-				</LegalSubsection>
+				</LegalSubsection> -->
 				<LegalSubsection title="Security of Your Personal Information">
 					<p>
 						When we collect and process personal information, and while we retain this information, we will
