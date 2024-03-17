@@ -50,9 +50,7 @@
 		value={0}
 		title="Moderation"
 	>
-		<svelte:fragment slot="lead"
-			><i class="fa-solid fa-gavel text-2xl" /></svelte:fragment
-		>
+		<svelte:fragment slot="lead"><i class="fa-solid fa-gavel text-2xl" /></svelte:fragment>
 		<span>Moderation</span>
 	</AppRailAnchor>
 	<AppRailAnchor
@@ -62,9 +60,7 @@
 		value={1}
 		title="Stats"
 	>
-		<svelte:fragment slot="lead"
-			><i class="fa-solid fa-trophy text-2xl" /></svelte:fragment
-		>
+		<svelte:fragment slot="lead"><i class="fa-solid fa-trophy text-2xl" /></svelte:fragment>
 		<span>Stats</span>
 	</AppRailAnchor>
 	<AppRailAnchor
@@ -74,10 +70,18 @@
 		value={2}
 		title="Suggestion"
 	>
-		<svelte:fragment slot="lead"
-			><i class="fa-regular fa-lightbulb text-2xl"></i></svelte:fragment
-		>
+		<svelte:fragment slot="lead"><i class="fa-regular fa-lightbulb text-2xl"></i></svelte:fragment>
 		<span>Suggestion</span>
+	</AppRailAnchor>
+	<AppRailAnchor
+		href={pathName('starboard')}
+		selected={currentPath === pathName('starboard')}
+		name="starboard"
+		value={3}
+		title="Starboard"
+	>
+		<svelte:fragment slot="lead"><i class="fa-regular fa-star text-2xl"></i></svelte:fragment>
+		<span>Starboard</span>
 	</AppRailAnchor>
 	<!-- --- -->
 	<svelte:fragment slot="trail"></svelte:fragment>

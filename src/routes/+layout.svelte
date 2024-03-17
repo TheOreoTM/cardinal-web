@@ -42,7 +42,6 @@
 	import Footer from '$components/navigation/Footer.svelte';
 	import { loading } from '$lib/stores/loading';
 	import Loading from '$components/ui/Loading.svelte';
-	import UnsavedChanges from '$components/ui/UnsavedChanges.svelte';
 	import { onMount } from 'svelte';
 	import { getExtendedToastStore } from '$lib/utils/toast';
 	import ConfettiRain from '$components/ui/ConfettiRain.svelte';
@@ -112,7 +111,6 @@
 	{/if}
 </Drawer>
 <ConfettiRain />
-<UnsavedChanges />
 <Modal />
 <Toast />
 <Loading />

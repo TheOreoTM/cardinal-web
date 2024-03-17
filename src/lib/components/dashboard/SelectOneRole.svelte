@@ -6,7 +6,6 @@
 	export let selected: string | null | undefined;
 	export let roles: APIRole[];
 	export let id: string = `${Math.random()}`;
-	export let disabled = false;
 
 	const transformedRoles = roles
 		.sort((a, b) => b.position - a.position)
@@ -15,4 +14,4 @@
 	export let onSelected: () => void = () => {};
 </script>
 
-<SelectOne {disabled} {id} {onSelected} {placeholder} bind:selected data={transformedRoles} />
+<SelectOne {id} {onSelected} {placeholder} bind:selected data={transformedRoles} />

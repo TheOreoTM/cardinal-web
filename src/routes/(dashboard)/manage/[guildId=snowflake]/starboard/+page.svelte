@@ -6,30 +6,10 @@
 	import { getExtendedToastStore } from '$lib/utils/toast';
 	import Heading from '$components/ui/Heading.svelte';
 	import { getGuildAvatarUrl } from '$lib/utils/common';
-	import { save } from '$lib/utils/saveLogic';
-	import SettingsRow from '$components/dashboard/SettingsRow.svelte';
 	import SelectOneChannel from '$components/dashboard/SelectOneChannel.svelte';
-	import { SlideToggle } from '@skeletonlabs/skeleton';
-
-	const toast = getExtendedToastStore();
-
-	function saveSuccessful() {
-		toast.clear();
-		toast.success('Saved settings successfully');
-	}
-
-	function saveFailed() {
-		toast.clear();
-		toast.error('Failed to save settings');
-	}
-
-	async function handleSave(setting: { [key: string]: any }) {
-		loading = true;
-		await save(guild.id, 'moderation', setting, saveSuccessful, saveFailed);
-		loading = false;
-	}
-
-	let loading = false;
+	import EmojiPicker from '$components/dashboard/EmojiPicker.svelte';
+	import { handleGuildSave } from '$lib/utils/saveLogic';
+	import { saving } from '$lib/stores/unsavedChanges';
 
 	export let data: PageData;
 
@@ -37,80 +17,104 @@
 	const guildData = data.data;
 
 	let defaults = {
-		channel: guildData.channelSuggestion,
-		createThread: guildData.suggestionCreateThread ?? false
+		channel: guildData.starboardChannel,
+		threshhold: guildData.starboardThreshold,
+		reaction: guildData.starboardReaction
 	};
 
 	let values = {
 		...defaults
 	};
 
-	// For new system for suggestion feedback
-	let action: string = values.createThread ? 'thread' : 'none';
+	function handleThresholdInput(event: Event) {
+		if (!(event.target instanceof HTMLInputElement)) return;
+		let value = parseInt(event.target.value, 10);
+		values.threshhold = value;
+	}
 
-	function selectChip(c: string): void {
-		action = c;
+	function isValidThreshold(value: number) {
+		return value >= 1 && value <= 30;
+	}
+
+	const toast = getExtendedToastStore();
+
+	function warnThreshold() {
+		toast.clear();
+		toast.error('Threshold must be between 1 and 30');
+	}
+
+	function handleSave(setting: { [key: string]: any }) {
+		handleGuildSave(guild.id, setting, toast);
 	}
 </script>
 
 <Meta
-	title="Suggestion Settings"
+	title="Starboard Settings"
 	blockRobots
 	logo={getGuildAvatarUrl(data.guild.id, data.guild.icon)}
 	guildName={data.guild.name}
 />
 
-<Heading title="Suggestion" description={`Manage the suggestion settings for ${data.guild.name}`} />
+<Heading title="Starboard" description={`Manage the starboard settings for ${data.guild.name}`} />
 <div class="space-y-6">
-	<SettingsCard title="Suggestion Channel">
-		<p>The channel where the bot should send the suggestion to send when a member makes a suggestion.</p>
-		<Label title="Channel" id="channel-suggestion">
-			<SelectOneChannel
-				selected={values.channel}
-				channels={data.channels}
-				disabled={loading}
-				onSelected={() => handleSave({ channelSuggestion: values.channel })}
-			/>
-		</Label>
-	</SettingsCard>
-	<SettingsRow>
-		<SettingsCard title="Create Thread">
-			<p>Should the bot create a thread under every suggestion so that members can discuss in it.</p>
-			<Label title="Create Thread" id="thread">
-				<SlideToggle
-					on:change={async () => {
-						await handleSave({
-							suggestionCreateThread: values.createThread
-						});
-					}}
-					disabled={loading}
-					size="sm"
-					name="thread"
-					bind:checked={values.createThread}
-				/>
-			</Label>
-		</SettingsCard>
-		<!-- Disabled For Now -->
-		<div class="opacity-60 hover:cursor-not-allowed">
-			<SettingsCard title="Suggestion Feedback Type" badgeText="Coming Soon">
-				<p>The system you want for suggestion feedback.</p>
-				<Label title="Type" id="type">
-					<div class="flex flex-row space-x-2">
-						{#each ['thread', 'vote', 'none'] as a}
-							<button
-								disabled
-								class="chip capitalize {action === a ? 'variant-filled-primary' : 'variant-soft-primary'}"
-								on:click={() => {
-									selectChip(a);
-								}}
-								on:keypress
-							>
-								<span>{a}</span>
-							</button>
-						{/each}
+	<SettingsCard title="Starboard Channel">
+		<p>
+			The channel where the messages that hit the star count ({guildData.starboardThreshold} stars) should be sent
+			to.
+		</p>
+		<div
+			class="grid grid-flow-row space-y-2 sm:space-y-0 sm:grid-flow-col sm:space-x-6 sm:grid-cols-2 justify-self-auto"
+		>
+			<div>
+				<Label title="Channel" id="channel-starboard">
+					<SelectOneChannel
+						bind:selected={values.channel}
+						channels={data.channels}
+						onSelected={() => handleSave({ starboardChannel: values.channel })}
+					/>
+				</Label>
+			</div>
+
+			<div>
+				<Label title="Threshold" id="threshold">
+					<div class="input-group input-group-divider grid-cols-[1fr_auto]">
+						<input
+							class="input"
+							type="number"
+							placeholder="Amount..."
+							id="threshold"
+							disabled={$saving}
+							bind:value={values.threshhold}
+							on:input={handleThresholdInput}
+							min="1"
+							max="30"
+						/>
+						<button
+							class="btn variant-filled"
+							disabled={values.threshhold === defaults.threshhold}
+							on:click={() => {
+								if (isValidThreshold(values.threshhold)) {
+									handleSave({ starboardThreshold: values.threshhold });
+									defaults.threshhold = values.threshhold;
+								} else {
+									warnThreshold();
+								}
+							}}
+						>
+							Save
+						</button>
 					</div>
 				</Label>
-			</SettingsCard>
+			</div>
+
+			<div>
+				<Label title="Emoji" id="thread">
+					<EmojiPicker
+						bind:selected={values.reaction}
+						onSelected={() => handleSave({ starboardReaction: values.reaction })}
+					/>
+				</Label>
+			</div>
 		</div>
-	</SettingsRow>
+	</SettingsCard>
 </div>

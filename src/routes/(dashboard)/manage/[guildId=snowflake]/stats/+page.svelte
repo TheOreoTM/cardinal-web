@@ -7,6 +7,7 @@
 	import { save } from '$lib/utils/saveLogic';
 	import Heading from '$components/ui/Heading.svelte';
 	import { getGuildAvatarUrl } from '$lib/utils/common';
+	import { saving } from '$lib/stores/unsavedChanges';
 
 	const toast = getExtendedToastStore();
 
@@ -22,9 +23,7 @@
 
 	function warnPremium() {
 		toast.clear();
-		toast.warning(
-			'You need premium to set the lookback amount higher than 30 days.'
-		);
+		toast.warning('You need premium to set the lookback amount higher than 30 days.');
 	}
 
 	function warnRange() {
@@ -63,8 +62,10 @@
 				return;
 			}
 			if (value > 30 && !guildData.premium) {
+				values.lookback = 30;
 				warnPremium();
 			} else {
+				values.lookback = 1;
 				warnRange();
 			}
 		}
@@ -96,21 +97,16 @@
 	description="Manage the lookback amount for the server and view basic server stats"
 />
 <div class="space-y-6">
-	<SettingsCard
-		title="Lookback"
-		documentation="The historic lookback for stats commands"
-	>
-		<p>
-			How much days should the bot take into consideration when displaying stats
-			(higher = slower)
-		</p>
+	<SettingsCard title="Lookback" documentation="The historic lookback for stats commands">
+		<p>How much days should the bot take into consideration when displaying stats (higher = slower)</p>
 		<Label id="stats-lookback" title="Lookback Amount">
 			<div class="sm:input-group input-group-divider grid-cols-[1fr_auto]">
 				<input
 					class="input"
-					type="text"
+					type="number"
 					placeholder="Amount..."
 					id="stats-lookback"
+					disabled={$saving}
 					bind:value={values.lookback}
 					on:input={handleLookbackInput}
 					min="1"

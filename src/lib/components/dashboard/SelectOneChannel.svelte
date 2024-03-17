@@ -2,7 +2,6 @@
 	import SelectOne from '$components/dashboard/SelectOne.svelte';
 	import type { APIGuildChannel } from 'discord-api-types/v10';
 
-	export let disabled = false;
 	export let placeholder = 'Select a channel...';
 	export let selected: string | null | undefined;
 	export let channels: APIGuildChannel<any>[];
@@ -12,7 +11,6 @@
 </script>
 
 <SelectOne
-	{disabled}
 	{id}
 	{onSelected}
 	{placeholder}

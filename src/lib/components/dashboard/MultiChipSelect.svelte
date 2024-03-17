@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { saving } from '$lib/stores/unsavedChanges';
+
 	let flavors: Record<string, boolean> = {
 		vanilla: true,
 		chocolate: false,
@@ -12,6 +14,7 @@
 
 {#each Object.keys(flavors) as f}
 	<button
+		disabled={$saving}
 		class="chip {flavors[f] ? 'variant-filled' : 'variant-soft'}"
 		on:click={() => {
 			toggle(f);

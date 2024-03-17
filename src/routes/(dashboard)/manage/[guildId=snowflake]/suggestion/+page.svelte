@@ -6,30 +6,11 @@
 	import { getExtendedToastStore } from '$lib/utils/toast';
 	import Heading from '$components/ui/Heading.svelte';
 	import { getGuildAvatarUrl } from '$lib/utils/common';
-	import { save } from '$lib/utils/saveLogic';
+	import { handleGuildSave } from '$lib/utils/saveLogic';
 	import SettingsRow from '$components/dashboard/SettingsRow.svelte';
 	import SelectOneChannel from '$components/dashboard/SelectOneChannel.svelte';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
-
-	const toast = getExtendedToastStore();
-
-	function saveSuccessful() {
-		toast.clear();
-		toast.success('Saved settings successfully');
-	}
-
-	function saveFailed() {
-		toast.clear();
-		toast.error('Failed to save settings');
-	}
-
-	async function handleSave(setting: { [key: string]: any }) {
-		loading = true;
-		await save(guild.id, 'moderation', setting, saveSuccessful, saveFailed);
-		loading = false;
-	}
-
-	let loading = false;
+	import { saving } from '$lib/stores/unsavedChanges';
 
 	export let data: PageData;
 
@@ -66,10 +47,10 @@
 		<p>The channel where the bot should send the suggestion to send when a member makes a suggestion.</p>
 		<Label title="Channel" id="channel-suggestion">
 			<SelectOneChannel
-				selected={values.channel}
+				bind:selected={values.channel}
 				channels={data.channels}
-				disabled={loading}
-				onSelected={() => handleSave({ channelSuggestion: values.channel })}
+				onSelected={() =>
+					handleGuildSave(guild.id, { channelSuggestion: values.channel }, getExtendedToastStore())}
 			/>
 		</Label>
 	</SettingsCard>
@@ -79,11 +60,15 @@
 			<Label title="Create Thread" id="thread">
 				<SlideToggle
 					on:change={async () => {
-						await handleSave({
-							suggestionCreateThread: values.createThread
-						});
+						await handleGuildSave(
+							guild.id,
+							{
+								suggestionCreateThread: values.createThread
+							},
+							getExtendedToastStore()
+						);
 					}}
-					disabled={loading}
+					disabled={$saving}
 					size="sm"
 					name="thread"
 					bind:checked={values.createThread}
@@ -91,7 +76,7 @@
 			</Label>
 		</SettingsCard>
 		<!-- Disabled For Now -->
-		<div class="opacity-60 hover:cursor-not-allowed">
+		<div class="opacity-60 hover:cursor-not-allowed -z-10">
 			<SettingsCard title="Suggestion Feedback Type" badgeText="Coming Soon">
 				<p>The system you want for suggestion feedback.</p>
 				<Label title="Type" id="type">

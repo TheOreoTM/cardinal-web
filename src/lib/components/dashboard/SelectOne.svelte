@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { saving } from '$lib/stores/unsavedChanges';
 	import type { SelectOption } from '$lib/types';
 	import { Autocomplete, popup } from '@skeletonlabs/skeleton';
 	import type { AutocompleteOption, PopupSettings } from '@skeletonlabs/skeleton';
@@ -7,7 +8,6 @@
 	export let data: SelectOption[];
 	export let onSelected: () => void;
 	export let id: string;
-	export let disabled = false;
 
 	/** This is round about way to fix the issue of it showing the value and not showing the label for the user*/
 
@@ -45,14 +45,14 @@
 	class="input autocomplete hover:cursor-pointer"
 	type="search"
 	name={`autocomplete-search-${id}`}
-	{disabled}
+	disabled={$saving}
 	{id}
 	{placeholder}
 	bind:value={selectedOptionName}
 	use:popup={popupSettings}
 />
 <div
-	class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto"
+	class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto z-50"
 	tabindex="-1"
 	data-popup={`popupAutocomplete-${id}`}
 >

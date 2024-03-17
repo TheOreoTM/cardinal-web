@@ -1,4 +1,4 @@
-export type DashboardSetting = 'stats' | 'moderation' | 'logging' | 'bot';
+export type DashboardSetting = 'stats' | 'moderation' | 'logging' | 'bot' | 'starboard' | 'guild';
 
 export type SelectOption = { value: string; label: string };
 
@@ -29,6 +29,12 @@ export interface GuildData {
 	channelModlog?: string | null;
 	channelSuggestion?: string | null;
 	channelAppeal?: string | null;
+
+	starboardChannel: string | null;
+	starboardWebhookId: string | null;
+	starboardWebhookToken: string | null;
+	starboardReaction: string;
+	starboardThreshold: number;
 
 	suggestionCreateThread?: boolean | null;
 

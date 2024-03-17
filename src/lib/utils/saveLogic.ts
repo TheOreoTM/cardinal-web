@@ -1,3 +1,4 @@
+import { saving } from '$lib/stores/unsavedChanges';
 import type { DashboardSetting } from '$lib/types';
 
 export async function saveData<T>(guildId: string, module: DashboardSetting, setting: string, value: any) {
@@ -33,4 +34,27 @@ export async function save(
 		console.error(error);
 		saveFailed();
 	}
+}
+
+import type { GuildDataKey } from '$lib/types';
+import { getExtendedToastStore } from '$lib/utils/toast';
+
+export async function handleGuildSave(
+	guildId: string,
+	setting: Partial<Record<GuildDataKey, any>>,
+	toast: ReturnType<typeof getExtendedToastStore>
+) {
+	function saveSuccessful() {
+		toast.clear();
+		toast.success('Saved settings successfully');
+	}
+
+	function saveFailed() {
+		toast.clear();
+		toast.error('Failed to save settings');
+	}
+
+	saving.set(true);
+	await save(guildId, 'guild', setting, saveSuccessful, saveFailed);
+	saving.set(false);
 }
