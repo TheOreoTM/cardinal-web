@@ -14,6 +14,8 @@
 
 	export let data: PageData;
 
+	const toast = getExtendedToastStore();
+
 	const guild = data.guild;
 	const guildData = data.data;
 
@@ -49,8 +51,7 @@
 			<SelectOneChannel
 				bind:selected={values.channel}
 				channels={data.channels}
-				onSelected={() =>
-					handleGuildSave(guild.id, { channelSuggestion: values.channel }, getExtendedToastStore())}
+				onSelected={() => handleGuildSave(guild.id, { channelSuggestion: values.channel }, toast)}
 			/>
 		</Label>
 	</SettingsCard>
@@ -65,7 +66,7 @@
 							{
 								suggestionCreateThread: values.createThread
 							},
-							getExtendedToastStore()
+							toast
 						);
 					}}
 					disabled={$saving}

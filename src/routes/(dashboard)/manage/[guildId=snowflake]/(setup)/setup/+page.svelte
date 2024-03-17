@@ -8,10 +8,6 @@
 	import SelectOneRole from '$components/dashboard/SelectOneRole.svelte';
 	import { save } from '$lib/utils/saveLogic';
 	import { loading } from '$lib/stores/loading';
-	import { confetti } from '$lib/stores/confetti';
-	import { goto } from '$app/navigation';
-	import ConfettiRain from '$components/ui/ConfettiRain.svelte';
-	import { redirect } from '@sveltejs/kit';
 	import { browser } from '$app/environment';
 
 	export let data: PageData;

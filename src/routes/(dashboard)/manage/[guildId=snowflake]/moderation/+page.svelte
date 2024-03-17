@@ -19,6 +19,8 @@
 	const guild = data.guild;
 	const guildData = data.data;
 
+	const toast = getExtendedToastStore();
+
 	let defaults = {
 		admin: guildData.roleAdmin ?? '',
 		moderator: guildData.roleModerator ?? '',
@@ -56,29 +58,28 @@
 		</p>
 		<Label title="Admin role" id="role-admin">
 			<SelectOneRole
-				onSelected={() => handleGuildSave(guild.id, { roleAdmin: values.admin }, getExtendedToastStore())}
+				onSelected={() => handleGuildSave(guild.id, { roleAdmin: values.admin }, toast)}
 				roles={data.roles}
 				bind:selected={values.admin}
 			/>
 		</Label>
 		<Label title="Moderator role" id="role-moderator">
 			<SelectOneRole
-				onSelected={() =>
-					handleGuildSave(guild.id, { roleModerator: values.moderator }, getExtendedToastStore())}
+				onSelected={() => handleGuildSave(guild.id, { roleModerator: values.moderator }, toast)}
 				roles={data.roles}
 				bind:selected={values.moderator}
 			/>
 		</Label>
 		<Label title="Staff role" id="role-staff">
 			<SelectOneRole
-				onSelected={() => handleGuildSave(guild.id, { roleStaff: values.staff }, getExtendedToastStore())}
+				onSelected={() => handleGuildSave(guild.id, { roleStaff: values.staff }, toast)}
 				roles={data.roles}
 				bind:selected={values.staff}
 			/>
 		</Label>
 		<Label title="Trainee role" id="role-trainee">
 			<SelectOneRole
-				onSelected={() => handleGuildSave(guild.id, { roleTrainee: values.trainee }, getExtendedToastStore())}
+				onSelected={() => handleGuildSave(guild.id, { roleTrainee: values.trainee }, toast)}
 				roles={data.roles}
 				bind:selected={values.trainee}
 			/>
@@ -90,7 +91,7 @@
 
 			<Label title="Muted role" id="role-muted">
 				<SelectOneRole
-					onSelected={() => handleGuildSave(guild.id, { roleMuted: values.muted }, getExtendedToastStore())}
+					onSelected={() => handleGuildSave(guild.id, { roleMuted: values.muted }, toast)}
 					roles={data.roles}
 					bind:selected={values.muted}
 				/>
@@ -105,8 +106,7 @@
 
 			<footer>
 				<SingleChipSelect
-					onSelect={() =>
-						handleGuildSave(guild.id, { appealType: values.appealType }, getExtendedToastStore())}
+					onSelect={() => handleGuildSave(guild.id, { appealType: values.appealType }, toast)}
 					bind:selected={values.appealType}
 					options={appealOptions}
 				/>
@@ -121,8 +121,7 @@
 					<SelectOneChannel
 						channels={data.channels}
 						bind:selected={values.channelAppeal}
-						onSelected={() =>
-							handleGuildSave(guild.id, { channelAppeal: values.channelAppeal }, getExtendedToastStore())}
+						onSelected={() => handleGuildSave(guild.id, { channelAppeal: values.channelAppeal }, toast)}
 					/>
 				</Label>
 			</SettingsCard>
@@ -151,7 +150,7 @@
 						<button
 							disabled={values.link === defaults.link}
 							on:click={() => {
-								handleGuildSave(guild.id, { appealLink: values.link }, getExtendedToastStore());
+								handleGuildSave(guild.id, { appealLink: values.link }, toast);
 								defaults.link = values.link;
 							}}
 							class="btn variant-filled-primary w-full">Update</button
