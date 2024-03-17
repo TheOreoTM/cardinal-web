@@ -31,6 +31,6 @@
 <button disabled={$saving} class="btn-icon variant-ghost rounded-md" use:popup={emojiPickerPopup}>
 	{selected}
 </button>
-<div data-popup="emoji-picker">
+<div data-popup="emoji-picker" class="z-50">
 	<div bind:this={el} />
 </div>
