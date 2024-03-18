@@ -117,9 +117,6 @@
 				min="1"
 				max="10"
 			/>
-			<svelte:fragment slot="navigation"
-				><button on:click={() => {}} class="btn variant-ghost">Skip</button></svelte:fragment
-			>
 		</Step>
 		<Step>
 			<svelte:fragment slot="header">Admin Role</svelte:fragment>

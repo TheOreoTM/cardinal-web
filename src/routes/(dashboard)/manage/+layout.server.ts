@@ -1,18 +1,17 @@
 import { getOrRefreshToken } from '$lib/server/discord';
 import { fetchBotGuilds, fetchUserGuilds } from '$lib/utils/api';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
 export const load = (async (event) => {
 	const accessToken = await getOrRefreshToken(event);
 	if (!accessToken) return { guilds: { mutual: [], unmutual: [] } };
 
-	const [botGuilds, userGuilds] = await Promise.all([
-		fetchBotGuilds(),
-		fetchUserGuilds(accessToken)
-	]).catch((e) => {
-		console.error(e);
-		return [[], []];
-	});
+	const [botGuilds, userGuilds] = await Promise.all([fetchBotGuilds(), fetchUserGuilds(accessToken)]).catch(
+		(e) => {
+			console.error(e);
+			return [[], []];
+		}
+	);
 
 	const managerGuilds = userGuilds.filter((userGuild) => {
 		// Check if the user has the "Manage Server" permission
@@ -34,10 +33,15 @@ export const load = (async (event) => {
 			})
 	);
 
+	event.locals.guilds = {
+		mutual: mutualManagerGuilds,
+		unmutual: unmutualManagerGuilds
+	};
+
 	return {
 		guilds: {
 			mutual: mutualManagerGuilds,
 			unmutual: unmutualManagerGuilds
 		}
 	};
-}) satisfies PageServerLoad;
+}) satisfies LayoutServerLoad;

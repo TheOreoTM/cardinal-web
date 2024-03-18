@@ -45,7 +45,7 @@ export const LOADING_MESSAGES = [
 	'3.141592653589793',
 	'meow',
 	'Cardinal was originally supposed to be named Ordinal but i did a typo and stuck with it :p',
-	,
+	'You are loved!',
 	"You're doing good today!",
 	"So without further ado, let's just jump right into it!",
 	'Time is gone, space is insane. Here it comes, here again.',

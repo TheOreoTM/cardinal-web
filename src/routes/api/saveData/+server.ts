@@ -22,7 +22,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 		return new Response(JSON.stringify({ ...data }), { status: 200 });
 	} catch (error) {
-		console.log('🚀 ~ constPOST:RequestHandler= ~ error:', error);
+		console.error(error);
 		return new Response(JSON.stringify({ error: error }));
 	}
 };

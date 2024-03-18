@@ -26,3 +26,17 @@ export function debounce<F extends (...args: any[]) => any>(
 export function getRandomItem<T>(arr: T[]) {
 	return arr[Math.floor(Math.random() * arr.length - 1)] as T;
 }
+
+/**
+ * Cuts the text to the latest whitespace before the length and if it cuts it adds an ellipsis
+ * @param text The text to cut
+ * @param length The length to cut the text to
+ */
+export function cutText(text: string, length: number, whitespace = true) {
+	if (text.length < length) return text;
+	let cut = text.slice(0, length);
+	if (whitespace) {
+		cut = cut.slice(0, cut.lastIndexOf(' '));
+	}
+	return cut + '...';
+}

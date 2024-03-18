@@ -11,7 +11,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	} catch (error) {
 		console.log('CALM DOWN BUDDY');
 	}
-	if (protectedPaths.includes(event.url.pathname)) {
+	if (protectedPaths.some((path) => event.url.pathname.startsWith(path))) {
 		if (!event.locals.user) {
 			throw redirect(302, PathNames.Login);
 		}

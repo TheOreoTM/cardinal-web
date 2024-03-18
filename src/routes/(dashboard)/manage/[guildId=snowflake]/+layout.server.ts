@@ -3,12 +3,9 @@ import type { APIGuildChannel, APIRole } from 'discord-api-types/v10';
 import type { LayoutServerLoad } from './$types';
 import { DISCORD_TOKEN } from '$env/static/private';
 import type { GuildData } from '$lib/types';
-import { browser } from '$app/environment';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ params, locals, url }) => {
-	// get guild data from cardinal
-
 	const guildId = params.guildId;
 	const guild = await fetchGuild(guildId);
 
@@ -20,7 +17,7 @@ export const load = (async ({ params, locals, url }) => {
 
 	locals.guild = guild;
 
-	const nickname = apiFetch(`/guilds/${guildId}/nickname`);
+	const nickname = await apiFetch<{ nickname: string }>(`/guilds/${guildId}/nickname`);
 
 	const channels = (await fetch(`https://discord.com/api/guilds/${params.guildId}/channels`, {
 		headers: {
@@ -42,5 +39,5 @@ export const load = (async ({ params, locals, url }) => {
 		})
 		.then(async (res) => await res.json())) as APIRole[];
 
-	return { guild, data, channels, roles, streamed: { nickname } };
+	return { guild, data, channels, roles, nickname };
 }) satisfies LayoutServerLoad;

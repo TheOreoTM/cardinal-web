@@ -4,26 +4,17 @@
 	import Label from '$components/forms/Label.svelte';
 	import SettingsCard from '$components/dashboard/SettingsCard.svelte';
 	import { getExtendedToastStore } from '$lib/utils/toast';
-	import { save } from '$lib/utils/saveLogic';
+	import { handleGuildSave, save } from '$lib/utils/saveLogic';
 	import Heading from '$components/ui/Heading.svelte';
 	import SettingsRow from '$components/dashboard/SettingsRow.svelte';
 	import { onMount } from 'svelte';
 	import { PathNames } from '$lib/constants';
 	import GlowButton from '$components/ui/GlowButton.svelte';
 	import { getGuildAvatarUrl } from '$lib/utils/common';
-	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { saving } from '$lib/stores/unsavedChanges';
 
 	const toast = getExtendedToastStore();
-
-	function saveSuccessful() {
-		toast.clear();
-		toast.success('Saved settings successfully');
-	}
-
-	function saveFailed() {
-		toast.clear();
-		toast.error('Failed to save settings');
-	}
 
 	function warnPrefix() {
 		toast.clear();
@@ -35,12 +26,9 @@
 		toast.error('Nickname cant be longer than 32 characters');
 	}
 
-	function handleSave(setting: { [key: string]: any }) {
-		save(guild.id, 'bot', setting, saveSuccessful, saveFailed);
-	}
-
 	async function updateNickname() {
-		const nickname = values.nickname === '' ? null : values.nickname;
+		$saving = true;
+		const nickname = data.nickname.nickname === '' ? null : data.nickname.nickname;
 		const res = await fetch(`/api/nickname`, {
 			method: 'POST',
 			headers: {
@@ -54,9 +42,12 @@
 		if (json.error) {
 			toast.error('Failed to update nickname, please try again later.');
 		} else {
-			defaults.nickname = values.nickname;
+			defaults.nickname.nickname = data.nickname.nickname;
 			toast.success('Nickname updated successfully');
 		}
+
+		values.nickname = data.nickname.nickname;
+		$saving = false;
 	}
 
 	function isValidPrefix(prefix: string) {
@@ -74,7 +65,7 @@
 		const valid = isValidPrefix(prefix);
 
 		if (valid) {
-			values.prefix = prefix;
+			data.data.prefix = prefix;
 		} else {
 			warnPrefix();
 		}
@@ -91,11 +82,11 @@
 
 			warnNicknameMaxLength();
 
-			values.nickname = nickname;
+			data.nickname.nickname = nickname;
 		}
 
 		if (valid) {
-			values.nickname = nickname;
+			data.nickname.nickname = nickname;
 		} else {
 			warnNicknameMaxLength();
 		}
@@ -103,23 +94,18 @@
 
 	export let data: PageData;
 
-	const guild = data.guild;
-	const guildData = data.data;
+	$: guild = data.guild;
+	$: guildData = data.data;
 
-	let defaults: { prefix: string; nickname: string | null } = {
+	$: defaults = {
 		prefix: guildData.prefix,
-		nickname: 'Cardinal'
+		nickname: data.nickname
 	};
 
 	let values = {
-		...defaults
+		prefix: data.data.prefix,
+		nickname: data.nickname.nickname
 	};
-
-	onMount(async () => {
-		const res = (await data.streamed.nickname) as { nickname: string };
-		defaults.nickname = res.nickname;
-		values.nickname = res.nickname;
-	});
 </script>
 
 <Meta
@@ -176,17 +162,18 @@
 						type="text"
 						placeholder={defaults.prefix}
 						id="prefix"
-						bind:value={values.prefix}
+						bind:value={data.data.prefix}
 						on:input={handlePrefixInput}
 						min="1"
 						max="10"
+						disabled={$saving}
 					/>
 					<button
-						disabled={values.prefix === defaults.prefix}
+						disabled={$saving || values.prefix === defaults.prefix}
 						on:click={() => {
-							if (isValidPrefix(values.prefix)) {
-								handleSave({ prefix: values.prefix });
-								defaults.prefix = values.prefix;
+							if (isValidPrefix(data.data.prefix)) {
+								handleGuildSave(data.guild.id, { prefix: data.data.prefix }, toast);
+								values.prefix = data.data.prefix;
 							}
 						}}
 						class="btn variant-filled-primary w-full">Update</button
@@ -201,15 +188,16 @@
 					<input
 						class="input"
 						type="text"
-						placeholder={defaults.nickname ?? 'Cardinal'}
+						placeholder={data.nickname.nickname ?? 'Cardinal'}
 						on:input={handleNicknameInput}
 						id="nickname"
 						min="1"
 						max="32"
-						bind:value={values.nickname}
+						bind:value={data.nickname.nickname}
+						disabled={$saving}
 					/>
 					<button
-						disabled={values.nickname === defaults.nickname}
+						disabled={values.nickname === defaults.nickname.nickname}
 						on:click={updateNickname}
 						class="btn variant-filled-primary w-full"
 					>

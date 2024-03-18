@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { PathNames } from '$lib/constants';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
 
