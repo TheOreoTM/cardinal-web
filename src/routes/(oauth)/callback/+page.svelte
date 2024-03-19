@@ -1,18 +1,8 @@
 <script lang="ts">
 	import Redirect from '$lib/components/Redirect.svelte';
 	import { PathNames } from '$lib/constants.js';
-	import { stateRedirect } from '$lib/stores/state.js';
 
 	export let data;
-
-	let redirectDestination = null;
-
-	if (data.state) {
-		redirectDestination = $stateRedirect[data.state];
-		delete $stateRedirect[data.state]; // Clear the state
-	}
-
-	redirectDestination ??= PathNames.Manage;
 </script>
 
 {#if !data.loggedIn}
