@@ -7,7 +7,9 @@ import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ params, locals, url }) => {
 	const guildId = params.guildId;
-	const guild = await fetchGuild(guildId);
+	const guild = await fetchGuild(guildId).catch(() => {
+		throw redirect(302, '/manage');
+	});
 
 	const data = await apiFetch<GuildData>(`/guilds/${guildId}/settings`);
 

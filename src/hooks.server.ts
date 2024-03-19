@@ -6,12 +6,21 @@ import { redirect } from '@sveltejs/kit';
 const protectedPaths = [PathNames.Manage, PathNames.Appeals];
 
 export const handle: Handle = async ({ event, resolve }) => {
-	try {
-		event.locals.user = await authenticateUser(event);
-	} catch (error) {
-		console.log('CALM DOWN BUDDY');
+	if (!event.locals.user) {
+		try {
+			event.locals.user = await authenticateUser(event);
+		} catch (error) {
+			console.log('Authentication error:', error);
+			redirect(302, PathNames.Home);
+		}
 	}
-	if (protectedPaths.some((path) => event.url.pathname.startsWith(path))) {
+	if (protectedPaths.some((path) => event.url.pathname.startsWith(path)) && !event.locals.user) {
+		try {
+			event.locals.user = await authenticateUser(event);
+		} catch (error) {
+			console.log('Authentication error:', error);
+			redirect(302, PathNames.Home);
+		}
 		if (!event.locals.user) {
 			throw redirect(302, PathNames.Login);
 		}
