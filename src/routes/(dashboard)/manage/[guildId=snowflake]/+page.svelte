@@ -125,7 +125,7 @@
 			</p>
 			<p>
 				<strong>Server ID:</strong>
-				{guild.id}
+				<span class="overflow-hidden overflow-ellipsis min-w-0">{guild.id}</span>
 				<button
 					class="hover:text-primary-500"
 					title="Copy ID"

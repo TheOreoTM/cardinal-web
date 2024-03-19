@@ -128,8 +128,9 @@
 		</div>
 	{/if}
 
-	<!-- User -->
+	<!-- User & Links-->
 	<div class="flex flex-row space-x-2 items-center">
+		<!-- Links -->
 		{#if !guild}
 			<!-- Legal -->
 			<div class="relative hidden sm:block">
@@ -212,10 +213,11 @@
 				</div>
 			</div>
 		{/if}
+		<!-- User -->
 		{#if user}
 			<button class="py-1 px-2 flex items-center btn hover:variant-ghost rounded-full" use:popup={userPopup}>
 				<Avatar width="w-8" initials={user.username[0]} src={getUserAvatarUrl(user.id, user.avatar)} />
-				<span class={`font-semibold text-lg ${usernameClass}`}>{user.global_name}</span>
+				<span class={`font-semibold text-lg ${usernameClass} md:block`}>{user.global_name}</span>
 				<span class={`${usernameClass} badge-icon md:block flex items-center`}>
 					<i id="user-arrow" class="fa-solid fa-angle-up text-base rotate-180 transition duration-300"></i>
 				</span>
